@@ -732,7 +732,7 @@ function App() {
               student={selectedStudent}
               onClose={() => setSelectedStudent(null)}
               onAddStudent={handleAddStudent}
-              onFinish={handleFinish}
+              onAddAndFinish={handleAddAndFinish}
             />
           )}
         </>
