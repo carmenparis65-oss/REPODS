@@ -677,6 +677,15 @@ function App() {
     }
   };
   
+  const handleSaveTeacher = async (classId, updatedClass) => {
+    try {
+      await axios.put(`${API}/classes/${classId}`, updatedClass);
+      loadClasses(); // Reload classes to see updated teacher names
+    } catch (error) {
+      console.error("Error updating teacher:", error);
+    }
+  };
+  
   // Render current screen
   switch (currentScreen) {
     case "home":
