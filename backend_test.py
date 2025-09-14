@@ -491,10 +491,13 @@ class BackendTester:
             # Test 7: Update student
             self.test_update_student(student_id)
             
-            # Test 8: Error handling
+            # Test 8: Father_name field specific scenarios
+            self.test_father_name_field_scenarios()
+            
+            # Test 9: Error handling
             self.test_error_handling()
             
-            # Test 9: Delete student (keep one for deletion test)
+            # Test 10: Delete student (keep one for deletion test)
             if len(self.created_student_ids) > 1:
                 self.test_delete_student(self.created_student_ids[-1])
         
