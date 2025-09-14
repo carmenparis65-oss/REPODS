@@ -751,8 +751,7 @@ function App() {
               setCurrentScreen("studentSelection");
             }}
             onAdvancedOptions={() => {
-              // Placeholder for advanced options
-              alert("Opciones avanzadas - En desarrollo");
+              setCurrentScreen("teacherEdit");
             }}
           />
           {showStudentForm && (
