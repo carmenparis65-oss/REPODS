@@ -646,6 +646,16 @@ function App() {
     setCurrentScreen("studentsToCall");
   };
   
+  const handleAddAndFinish = (student) => {
+    // Agregar el estudiante actual si no está ya en la lista
+    const isAlreadySelected = selectedStudents.some(s => s.id === student.id);
+    if (!isAlreadySelected) {
+      setSelectedStudents([...selectedStudents, student]);
+    }
+    setSelectedStudent(null);
+    setCurrentScreen("studentsToCall");
+  };
+  
   const handleSaveStudent = async (studentData) => {
     try {
       if (editingStudent) {
