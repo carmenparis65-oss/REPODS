@@ -48,7 +48,7 @@ const MainScreen = ({ classes, onClassSelect, onSettingsClick }) => {
             >
               <div className="text-center">
                 <div className="text-sm mb-2">{classItem.class_name}</div>
-                <div className="text-xs opacity-90">{classItem.teacher_name}</div>
+                <div className="text-xs opacity-90">{classItem.teacher_name.toUpperCase()}</div>
               </div>
             </button>
           ))}
