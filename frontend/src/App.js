@@ -733,6 +733,7 @@ function App() {
             onStudentSelect={handleStudentSelect}
             onBack={() => setCurrentScreen("main")}
             selectedStudents={selectedStudents}
+            teacherName={getTeacherName(selectedClass)}
           />
           {selectedStudent && (
             <StudentDetailsModal
