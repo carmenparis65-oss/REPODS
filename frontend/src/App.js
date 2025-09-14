@@ -24,7 +24,7 @@ const HomeScreen = ({ onContinue, schoolName }) => {
           onClick={onContinue}
           className="bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors shadow-lg"
         >
-          EMPEZAR
+          Continuar
         </button>
       </div>
     </div>
@@ -36,15 +36,12 @@ const MainScreen = ({ classes, onClassSelect, onSettingsClick }) => {
   return (
     <div className="min-h-screen bg-white p-4">
       <div className="max-w-md mx-auto">
-        {/* Title */}
         <h1 className="text-2xl font-bold text-center mb-6 text-black">C.E.I.P JOSEFINA CARABIAS</h1>
         
-        {/* Subtitle with pink background */}
         <div className="bg-pink-300 text-black font-bold text-lg text-center py-3 mb-6 rounded-lg">
           SELECCIONAR AULA:
         </div>
         
-        {/* Vertical buttons */}
         <div className="space-y-3 mb-8">
           {classes.map((classItem, index) => (
             <button
@@ -58,7 +55,6 @@ const MainScreen = ({ classes, onClassSelect, onSettingsClick }) => {
           ))}
         </div>
         
-        {/* Settings button */}
         <div className="fixed bottom-6 right-6">
           <button
             onClick={onSettingsClick}
@@ -81,19 +77,16 @@ const StudentListScreen = ({ className, students, onStudentSelect, onBack, selec
   const isPrimaria123 = ["1º DE PRIMARIA", "2º DE PRIMARIA", "3º DE PRIMARIA"].includes(className);
   const isPrimaria456 = ["4º DE PRIMARIA", "5º DE PRIMARIA", "6º DE PRIMARIA"].includes(className);
   
-  let backgroundColor = "#F3F4F6";
-  let titleColor = "text-gray-800";
-  
+  let backgroundColor = "#F3F4F6"; // gray-100 default
   if (isInfantil) {
-    backgroundColor = "#93C5FD";
-    titleColor = "text-black";
+    backgroundColor = "#93C5FD"; // blue-300 (más claro que el anterior)
   } else if (isPrimaria123) {
-    backgroundColor = "#FB923C";
-    titleColor = "text-black";
+    backgroundColor = "#FB923C"; // orange-400 (más claro)
   } else if (isPrimaria456) {
-    backgroundColor = "#A3E635";
-    titleColor = "text-black";
+    backgroundColor = "#A3E635"; // lime-400 (más claro)
   }
+  
+  const titleColor = "text-black";
   
   return (
     <div className="min-h-screen p-6" style={{ backgroundColor }}>
@@ -115,7 +108,7 @@ const StudentListScreen = ({ className, students, onStudentSelect, onBack, selec
         </div>
         
         <div className="bg-white rounded-lg shadow-lg">
-          <div className="p-4 border-b" style={{ backgroundColor: isPrimaria123 ? "#FBBF24" : "#F97316" }}>
+          <div className="p-4 border-b" style={{ backgroundColor: "#F97316" }}>
             <h3 className="text-lg font-semibold text-black">SELECCIONAR ALUMNO/A ({students.length})</h3>
           </div>
           
@@ -152,7 +145,7 @@ const StudentListScreen = ({ className, students, onStudentSelect, onBack, selec
 };
 
 // Student Details Modal
-const StudentDetailsModal = ({ student, onClose, onAddStudent, onAddAndFinish }) => {
+const StudentDetailsModal = ({ student, onClose, onAddStudent, onFinish }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg max-w-md w-full max-h-96 overflow-y-auto">
@@ -182,15 +175,99 @@ const StudentDetailsModal = ({ student, onClose, onAddStudent, onAddAndFinish })
               onClick={() => onAddStudent(student)}
               className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
             >
-              AÑADIR OTRO
+              Agregar Estudiante
             </button>
             <button
-              onClick={() => onAddAndFinish(student)}
-              className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+              onClick={onFinish}
+              className="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors"
             >
-              AGREGAR Y FINALIZAR
+              Finalizar
             </button>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Students to Call Screen
+const StudentsToCallScreen = ({ selectedStudents, onBackToMenu }) => {
+  return (
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-2xl mx-auto">
+        <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">ESTUDIANTES PARA LLAMAR</h2>
+        
+        <div className="bg-white rounded-lg shadow-lg">
+          <div className="p-4 border-b">
+            <h3 className="text-lg font-semibold">Lista de Estudiantes ({selectedStudents.length})</h3>
+          </div>
+          
+          <div className="max-h-96 overflow-y-auto">
+            {selectedStudents.map((student, index) => (
+              <div key={student.id} className="p-4 border-b border-gray-100">
+                <div className="font-medium">{student.first_and_last_name}</div>
+                <div className="text-sm text-gray-600">{student.class_name}</div>
+              </div>
+            ))}
+          </div>
+          
+          {selectedStudents.length === 0 && (
+            <div className="p-8 text-center text-gray-500">
+              No hay estudiantes seleccionados
+            </div>
+          )}
+        </div>
+        
+        <div className="mt-8 text-center">
+          <button
+            onClick={onBackToMenu}
+            className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+          >
+            IR AL MENÚ
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Settings Screen
+const SettingsScreen = ({ onBack, onAddStudent, onEditStudent, onAdvancedOptions }) => {
+  return (
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-md mx-auto">
+        <div className="flex items-center justify-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">OPCIONES AVANZADAS</h2>
+        </div>
+        
+        <div className="space-y-4">
+          <button
+            onClick={onAddStudent}
+            className="w-full bg-blue-600 text-white p-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+          >
+            AGREGAR ESTUDIANTE
+          </button>
+          
+          <button
+            onClick={onEditStudent}
+            className="w-full bg-blue-600 text-white p-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+          >
+            EDITAR ESTUDIANTE
+          </button>
+          
+          <button
+            onClick={onAdvancedOptions}
+            className="w-full bg-blue-600 text-white p-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+          >
+            EDITAR PROFESORES
+          </button>
+          
+          <button
+            onClick={onBack}
+            className="w-full bg-blue-600 text-white p-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+          >
+            VOLVER AL MENÚ
+          </button>
         </div>
       </div>
     </div>
@@ -230,11 +307,6 @@ function App() {
     }
   };
   
-  const getTeacherName = (className) => {
-    const classInfo = classes.find(c => c.class_name === className);
-    return classInfo ? classInfo.teacher_name : "";
-  };
-  
   const handleClassSelect = (className) => {
     setSelectedClass(className);
     loadStudentsByClass(className);
@@ -251,105 +323,83 @@ function App() {
       setSelectedStudents([...selectedStudents, student]);
     }
     setSelectedStudent(null);
-    setCurrentScreen("main");
   };
   
-  const handleAddAndFinish = (student) => {
-    const isAlreadySelected = selectedStudents.some(s => s.id === student.id);
-    if (!isAlreadySelected) {
-      setSelectedStudents([...selectedStudents, student]);
-    }
+  const handleFinish = () => {
     setSelectedStudent(null);
     setCurrentScreen("studentsToCall");
   };
   
-  // Render screens
-  if (currentScreen === "home") {
-    return (
-      <HomeScreen
-        onContinue={() => setCurrentScreen("main")}
-        schoolName={schoolName}
-      />
-    );
-  }
+  const getTeacherName = (className) => {
+    const classInfo = classes.find(c => c.class_name === className);
+    return classInfo ? classInfo.teacher_name : "";
+  };
   
-  if (currentScreen === "main") {
-    return (
-      <MainScreen
-        classes={classes}
-        onClassSelect={handleClassSelect}
-        onSettingsClick={() => alert("Configuración en desarrollo")}
-      />
-    );
-  }
-  
-  if (currentScreen === "studentList") {
-    return (
-      <>
-        <StudentListScreen
-          className={selectedClass}
-          students={students}
-          onStudentSelect={handleStudentSelect}
-          onBack={() => setCurrentScreen("main")}
-          selectedStudents={selectedStudents}
-          teacherName={getTeacherName(selectedClass)}
+  // Render current screen
+  switch (currentScreen) {
+    case "home":
+      return (
+        <HomeScreen
+          onContinue={() => setCurrentScreen("main")}
+          schoolName={schoolName}
         />
-        {selectedStudent && (
-          <StudentDetailsModal
-            student={selectedStudent}
-            onClose={() => setSelectedStudent(null)}
-            onAddStudent={handleAddStudent}
-            onAddAndFinish={handleAddAndFinish}
+      );
+      
+    case "main":
+      return (
+        <MainScreen
+          classes={classes}
+          onClassSelect={handleClassSelect}
+          onSettingsClick={() => setCurrentScreen("settings")}
+        />
+      );
+      
+    case "studentList":
+      return (
+        <>
+          <StudentListScreen
+            className={selectedClass}
+            students={students}
+            onStudentSelect={handleStudentSelect}
+            onBack={() => setCurrentScreen("main")}
+            selectedStudents={selectedStudents}
+            teacherName={getTeacherName(selectedClass)}
           />
-        )}
-      </>
-    );
+          {selectedStudent && (
+            <StudentDetailsModal
+              student={selectedStudent}
+              onClose={() => setSelectedStudent(null)}
+              onAddStudent={handleAddStudent}
+              onFinish={handleFinish}
+            />
+          )}
+        </>
+      );
+      
+    case "studentsToCall":
+      return (
+        <StudentsToCallScreen
+          selectedStudents={selectedStudents}
+          onBackToMenu={() => {
+            setCurrentScreen("main");
+            setSelectedStudents([]);
+          }}
+        />
+      );
+      
+    case "settings":
+      return (
+        <SettingsScreen
+          onBack={() => setCurrentScreen("main")}
+          onAddStudent={() => alert("Agregar estudiante - En desarrollo")}
+          onEditStudent={() => alert("Editar estudiante - En desarrollo")}
+          onAdvancedOptions={() => alert("Editar profesores - En desarrollo")}
+        />
+      );
+      
+    default:
+      return <div>Screen not found</div>;
   }
-  
-  if (currentScreen === "studentsToCall") {
-    return (
-      <div className="min-h-screen bg-gray-100 p-6">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">ESTUDIANTES PARA LLAMAR</h2>
-          
-          <div className="bg-white rounded-lg shadow-lg">
-            <div className="p-4 border-b">
-              <h3 className="text-lg font-semibold">Lista de Estudiantes ({selectedStudents.length})</h3>
-            </div>
-            
-            <div className="max-h-96 overflow-y-auto">
-              {selectedStudents.map((student, index) => (
-                <div key={student.id} className="p-4 border-b border-gray-100">
-                  <div className="font-medium">{student.first_and_last_name}</div>
-                  <div className="text-sm text-gray-600">{student.class_name}</div>
-                </div>
-              ))}
-            </div>
-            
-            {selectedStudents.length === 0 && (
-              <div className="p-8 text-center text-gray-500">
-                No hay estudiantes seleccionados
-              </div>
-            )}
-          </div>
-          
-          <div className="mt-8 text-center">
-            <button
-              onClick={() => {
-                setCurrentScreen("main");
-                setSelectedStudents([]);
-              }}
-              className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-            >
-              IR AL MENÚ
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-  
-  return <div>Screen not found</div>;
 }
 
 export default App;
