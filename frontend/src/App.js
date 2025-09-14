@@ -673,6 +673,19 @@ function App() {
         </>
       );
       
+    case "studentSelection":
+      return (
+        <StudentSelectionScreen
+          students={allStudents}
+          onStudentSelect={(student) => {
+            setEditingStudent(student);
+            setShowStudentForm(true);
+            setCurrentScreen("settings");
+          }}
+          onBack={() => setCurrentScreen("settings")}
+        />
+      );
+      
     default:
       return <div>Screen not found</div>;
   }
