@@ -150,13 +150,13 @@ const StudentDetailsModal = ({ student, onClose, onAddStudent, onFinish }) => {
               onClick={() => onAddStudent(student)}
               className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
             >
-              AGREGAR
+              AÑADIR OTRO
             </button>
             <button
               onClick={onFinish}
               className="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors"
             >
-              Finalizar
+              AGREGAR Y FINALIZAR
             </button>
           </div>
         </div>
