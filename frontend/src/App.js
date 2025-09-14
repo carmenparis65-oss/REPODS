@@ -581,46 +581,43 @@ function App() {
       
     case "settings":
       return (
-        <SettingsScreen
-          onBack={() => setCurrentScreen("main")}
-          onAddStudent={() => {
-            setEditingStudent(null);
-            setShowStudentForm(true);
-          }}
-          onEditStudent={() => {
-            // For now, just show the first student or allow selection
-            if (allStudents.length > 0) {
-              setEditingStudent(allStudents[0]);
+        <>
+          <SettingsScreen
+            onBack={() => setCurrentScreen("main")}
+            onAddStudent={() => {
+              setEditingStudent(null);
               setShowStudentForm(true);
-            }
-          }}
-          onAdvancedOptions={() => {
-            // Placeholder for advanced options
-            alert("Opciones avanzadas - En desarrollo");
-          }}
-        />
+            }}
+            onEditStudent={() => {
+              // For now, just show the first student or allow selection
+              if (allStudents.length > 0) {
+                setEditingStudent(allStudents[0]);
+                setShowStudentForm(true);
+              }
+            }}
+            onAdvancedOptions={() => {
+              // Placeholder for advanced options
+              alert("Opciones avanzadas - En desarrollo");
+            }}
+          />
+          {showStudentForm && (
+            <StudentForm
+              student={editingStudent}
+              onSave={handleSaveStudent}
+              onDelete={handleDeleteStudent}
+              onCancel={() => {
+                setShowStudentForm(false);
+                setEditingStudent(null);
+              }}
+              isEdit={!!editingStudent}
+            />
+          )}
+        </>
       );
       
     default:
       return <div>Screen not found</div>;
   }
-  
-  return (
-    <>
-      {showStudentForm && (
-        <StudentForm
-          student={editingStudent}
-          onSave={handleSaveStudent}
-          onDelete={handleDeleteStudent}
-          onCancel={() => {
-            setShowStudentForm(false);
-            setEditingStudent(null);
-          }}
-          isEdit={!!editingStudent}
-        />
-      )}
-    </>
-  );
 }
 
 export default App;
