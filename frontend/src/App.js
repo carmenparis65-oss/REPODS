@@ -737,7 +737,10 @@ function App() {
   };
   
   // Render current screen
-  switch (currentScreen) {
+  return (
+    <>
+      {(() => {
+        switch (currentScreen) {
     case "home":
       return (
         <HomeScreen
