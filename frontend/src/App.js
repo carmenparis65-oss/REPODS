@@ -50,7 +50,7 @@ const MainScreen = ({ classes, onClassSelect, onSettingsClick }) => {
             <button
               key={classItem.id}
               onClick={() => onClassSelect(classItem.class_name)}
-              className="w-full p-4 rounded-lg text-black font-bold text-lg hover:opacity-90 transition-opacity shadow-md"
+              className="w-full p-4 rounded-lg text-black font-bold text-lg hover:opacity-90 transition-opacity shadow-md text-left"
               style={{ backgroundColor: classItem.background_color }}
             >
               {classItem.class_name} - {classItem.teacher_name.toUpperCase()}
