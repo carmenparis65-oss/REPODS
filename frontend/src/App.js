@@ -12,9 +12,9 @@ const HomeScreen = ({ onContinue, schoolName }) => {
       <div className="text-center">
         <div className="mb-8">
           <img 
-            src="[URL_DE_TU_IMAGEN_LOGO]"
+            src="https://files.emergent.sh/3bee0a78-71df-4e85-acaf-ebba1b98829c"
             alt="CEIP Josefina Carabias Logo"
-            className="w-48 h-48 mx-auto rounded-lg shadow-lg object-cover"
+            className="w-48 h-48 mx-auto rounded-lg shadow-lg object-contain bg-white"
           />
         </div>
         <h1 className="text-4xl font-bold mb-2">{schoolName}</h1>
