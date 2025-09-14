@@ -845,9 +845,12 @@ function App() {
         />
       );
       
-    default:
-      return <div>Screen not found</div>;
-  }
+          default:
+            return <div>Screen not found</div>;
+        }
+      })()}
+    </>
+  );
 }
 
 export default App;
