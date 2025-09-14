@@ -650,11 +650,8 @@ function App() {
               setShowStudentForm(true);
             }}
             onEditStudent={() => {
-              // For now, just show the first student or allow selection
-              if (allStudents.length > 0) {
-                setEditingStudent(allStudents[0]);
-                setShowStudentForm(true);
-              }
+              // Go to student selection screen
+              setCurrentScreen("studentSelection");
             }}
             onAdvancedOptions={() => {
               // Placeholder for advanced options
