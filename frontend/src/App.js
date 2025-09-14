@@ -112,7 +112,7 @@ const StudentListScreen = ({ className, students, onStudentSelect, onBack, selec
           <div className="text-center">
             <h2 className={`text-2xl font-bold ${titleColor}`}>{className}</h2>
             {teacherName && (
-              <p className={`text-sm ${titleColor} opacity-90 mt-1`}>{teacherName.toUpperCase()}</p>
+              <p className={`text-2xl font-bold ${titleColor} opacity-90 mt-1`}>{teacherName.toUpperCase()}</p>
             )}
           </div>
           <div></div>
