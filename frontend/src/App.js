@@ -18,7 +18,7 @@ const HomeScreen = ({ onContinue, schoolName }) => {
           />
         </div>
         <h1 className="text-4xl font-bold mb-2">{schoolName}</h1>
-        <p className="text-xl mb-8 opacity-90">Sistema de Seguimiento de Estudiantes</p>
+        <p className="text-xl mb-8 opacity-90">CONTROL DE ALUMNOS</p>
         
         <button
           onClick={onContinue}
