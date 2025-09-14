@@ -51,29 +51,62 @@
             }
         </style>
         <script>
-            // Remover cualquier badge de Emergent que se genere dinámicamente
-            window.addEventListener('DOMContentLoaded', function() {
-                function removeBadge() {
-                    const badges = document.querySelectorAll('[id*="emergent"], [class*="emergent"], a[href*="emergent"]');
-                    badges.forEach(badge => {
-                        badge.style.display = 'none';
-                        badge.remove();
-                    });
-                }
+            // Función más agresiva para remover el badge de Emergent
+            function removeBadgeAggressive() {
+                // Buscar por múltiples criterios
+                const selectors = [
+                    '#emergent-badge',
+                    '[id*="emergent"]',
+                    '[class*="emergent"]',
+                    'a[href*="emergent"]',
+                    'a[href*="emergent.sh"]',
+                    '*[style*="Made with Emergent"]',
+                    '*:contains("Made with Emergent")',
+                    'div:contains("Made with")',
+                    'a:contains("Made with")',
+                    'p:contains("Made with")'
+                ];
                 
-                // Ejecutar inmediatamente
-                removeBadge();
+                // Remover por cada selector
+                selectors.forEach(selector => {
+                    try {
+                        const elements = document.querySelectorAll(selector);
+                        elements.forEach(el => {
+                            el.style.display = 'none !important';
+                            el.style.visibility = 'hidden !important';
+                            el.style.opacity = '0 !important';
+                            el.remove();
+                        });
+                    } catch(e) {}
+                });
                 
-                // Ejecutar cada 100ms por 5 segundos para atrapar badges generados dinámicamente
-                let attempts = 0;
-                const interval = setInterval(() => {
-                    removeBadge();
-                    attempts++;
-                    if (attempts > 50) {
-                        clearInterval(interval);
+                // Buscar y remover elementos que contengan "Made with Emergent"
+                const allElements = document.querySelectorAll('*');
+                allElements.forEach(el => {
+                    if (el.textContent && el.textContent.includes('Made with Emergent')) {
+                        el.style.display = 'none !important';
+                        el.remove();
                     }
-                }, 100);
+                });
+            }
+            
+            // Ejecutar en múltiples eventos
+            document.addEventListener('DOMContentLoaded', removeBadgeAggressive);
+            window.addEventListener('load', removeBadgeAggressive);
+            
+            // Observer para detectar nuevos elementos añadidos al DOM
+            const observer = new MutationObserver(function(mutations) {
+                removeBadgeAggressive();
             });
+            
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true,
+                attributes: true
+            });
+            
+            // Ejecutar periódicamente por si acaso
+            setInterval(removeBadgeAggressive, 500);
         </script>
         <script>
             !(function (t, e) {
