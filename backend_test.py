@@ -330,6 +330,100 @@ class BackendTester:
             self.log_test(f"DELETE /api/students/{student_id}", False, f"Exception: {str(e)}")
             return False
             
+    def test_father_name_field_scenarios(self):
+        """Test specific scenarios for the father_name field"""
+        try:
+            # Test 1: Create student with father_name
+            student_with_father = {
+                "first_and_last_name": "Pedro Jiménez Vega",
+                "class_name": "2º DE PRIMARIA",
+                "mother_name": "Ana Vega Morales",
+                "mother_phone": "666444555",
+                "father_name": "Luis Jiménez Ruiz",
+                "father_phone": "666777888",
+                "allergies": "",
+                "comments": "Test student for father_name field"
+            }
+            
+            response = self.session.post(f"{self.base_url}/students", json=student_with_father)
+            if response.status_code != 200:
+                self.log_test("Father_name field - Create with father_name", False, f"Status code: {response.status_code}")
+                return False
+                
+            created_student = response.json()
+            if created_student.get("father_name") != student_with_father["father_name"]:
+                self.log_test("Father_name field - Create with father_name", False, f"Expected '{student_with_father['father_name']}', got '{created_student.get('father_name')}'")
+                return False
+                
+            student_id_1 = created_student["id"]
+            self.created_student_ids.append(student_id_1)
+            
+            # Test 2: Create student without father_name (should default to empty string)
+            student_without_father = {
+                "first_and_last_name": "Elena Moreno Castro",
+                "class_name": "3º DE PRIMARIA",
+                "mother_name": "Rosa Castro López",
+                "mother_phone": "666222333"
+            }
+            
+            response = self.session.post(f"{self.base_url}/students", json=student_without_father)
+            if response.status_code != 200:
+                self.log_test("Father_name field - Create without father_name", False, f"Status code: {response.status_code}")
+                return False
+                
+            created_student = response.json()
+            if created_student.get("father_name") != "":
+                self.log_test("Father_name field - Create without father_name", False, f"Expected empty string, got '{created_student.get('father_name')}'")
+                return False
+                
+            student_id_2 = created_student["id"]
+            self.created_student_ids.append(student_id_2)
+            
+            # Test 3: Update father_name field
+            update_father_data = {"father_name": "Luis Jiménez Ruiz (Padre Actualizado)"}
+            response = self.session.put(f"{self.base_url}/students/{student_id_1}", json=update_father_data)
+            if response.status_code != 200:
+                self.log_test("Father_name field - Update father_name", False, f"Status code: {response.status_code}")
+                return False
+                
+            updated_student = response.json()
+            if updated_student.get("father_name") != update_father_data["father_name"]:
+                self.log_test("Father_name field - Update father_name", False, f"Expected '{update_father_data['father_name']}', got '{updated_student.get('father_name')}'")
+                return False
+                
+            # Test 4: Add father_name to student that didn't have one
+            add_father_data = {"father_name": "Carlos Moreno Díaz"}
+            response = self.session.put(f"{self.base_url}/students/{student_id_2}", json=add_father_data)
+            if response.status_code != 200:
+                self.log_test("Father_name field - Add father_name to existing student", False, f"Status code: {response.status_code}")
+                return False
+                
+            updated_student = response.json()
+            if updated_student.get("father_name") != add_father_data["father_name"]:
+                self.log_test("Father_name field - Add father_name to existing student", False, f"Expected '{add_father_data['father_name']}', got '{updated_student.get('father_name')}'")
+                return False
+                
+            # Test 5: Verify father_name appears in student lists
+            response = self.session.get(f"{self.base_url}/students")
+            if response.status_code != 200:
+                self.log_test("Father_name field - Verify in student list", False, f"Status code: {response.status_code}")
+                return False
+                
+            all_students = response.json()
+            test_students = [s for s in all_students if s["id"] in [student_id_1, student_id_2]]
+            
+            for student in test_students:
+                if "father_name" not in student:
+                    self.log_test("Father_name field - Verify in student list", False, f"father_name field missing from student {student['first_and_last_name']}")
+                    return False
+                    
+            self.log_test("Father_name field - All scenarios", True, "✅ All father_name field scenarios working correctly: create with/without father_name, update father_name, add father_name to existing student, verify in lists")
+            return True
+            
+        except Exception as e:
+            self.log_test("Father_name field - All scenarios", False, f"Exception: {str(e)}")
+            return False
+            
     def test_error_handling(self):
         """Test error handling for invalid requests"""
         try:
