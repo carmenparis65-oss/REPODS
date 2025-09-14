@@ -108,12 +108,13 @@ class BackendTester:
     def test_create_student(self):
         """Test POST /api/students - Create a student with all fields"""
         try:
-            # Test data with realistic Spanish names
+            # Test data with realistic Spanish names - INCLUDING father_name field
             student_data = {
                 "first_and_last_name": "María García López",
                 "class_name": "1º DE PRIMARIA",
                 "mother_name": "Carmen López Ruiz",
                 "mother_phone": "666123456",
+                "father_name": "José García Martín",
                 "father_phone": "677987654",
                 "allergies": "Alergia a los frutos secos",
                 "comments": "Estudiante muy aplicada"
