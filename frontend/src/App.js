@@ -782,6 +782,15 @@ function App() {
         />
       );
       
+    case "teacherEdit":
+      return (
+        <TeacherEditScreen
+          classes={classes}
+          onSaveTeacher={handleSaveTeacher}
+          onBack={() => setCurrentScreen("settings")}
+        />
+      );
+      
     default:
       return <div>Screen not found</div>;
   }
