@@ -158,6 +158,14 @@ async def update_class_settings(class_id: str, class_update: ClassSettingsCreate
     updated_class = await db.class_settings.find_one({"id": class_id})
     return ClassSettings(**updated_class)
 
+# Route to reset class colors
+@api_router.post("/classes/reset-colors")
+async def reset_class_colors():
+    # Delete existing classes
+    await db.class_settings.delete_many({})
+    # Let the get_class_settings endpoint recreate them with new colors
+    return {"message": "Class colors reset successfully"}
+
 # Routes for App Settings
 @api_router.get("/settings", response_model=AppSettings)
 async def get_app_settings():
