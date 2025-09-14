@@ -12,7 +12,7 @@ const HomeScreen = ({ onContinue, schoolName }) => {
       <div className="text-center">
         <div className="mb-8">
           <img 
-            src="https://images.pexels.com/photos/5428267/pexels-photo-5428267.jpeg"
+            src="[URL_DE_TU_IMAGEN_LOGO]"
             alt="CEIP Josefina Carabias Logo"
             className="w-48 h-48 mx-auto rounded-lg shadow-lg object-cover"
           />
