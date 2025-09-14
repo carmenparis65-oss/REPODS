@@ -637,7 +637,7 @@ function App() {
       setSelectedStudents([...selectedStudents, student]);
     }
     setSelectedStudent(null);
-    // Regresar automáticamente a la pantalla principal de clases
+    // Regresar automáticamente a la pantalla principal de clases para seleccionar otro
     setCurrentScreen("main");
   };
   
