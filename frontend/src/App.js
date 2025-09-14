@@ -11,13 +11,11 @@ const HomeScreen = ({ onContinue, schoolName }) => {
     <div className="min-h-screen bg-gradient-to-br from-blue-600 to-purple-700 flex flex-col items-center justify-center text-white">
       <div className="text-center">
         <div className="mb-8">
-          <div className="w-48 h-48 mx-auto rounded-lg shadow-lg bg-white border-4 border-blue-200 flex flex-col items-center justify-center">
-            <div className="text-4xl mb-2">🌍</div>
-            <div className="text-xs text-center font-bold text-blue-800">CEIP</div>
-            <div className="text-xs text-center font-bold text-blue-800">JOSEFINA</div>
-            <div className="text-xs text-center font-bold text-blue-800">CARABIAS</div>
-            <div className="text-2xl mt-2">👥</div>
-          </div>
+          <img 
+            src="https://i.ibb.co/XxTxQTfp/LOGO-COLE.jpg"
+            alt="CEIP Josefina Carabias Logo"
+            className="w-48 h-48 mx-auto rounded-lg shadow-lg object-contain bg-white p-2"
+          />
         </div>
         <h1 className="text-4xl font-bold mb-2">{schoolName}</h1>
         <p className="text-xl mb-8 opacity-90">CONTROL DE ALUMNOS</p>
