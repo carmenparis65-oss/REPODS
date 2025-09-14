@@ -72,8 +72,12 @@ const MainScreen = ({ classes, onClassSelect, onSettingsClick }) => {
 
 // Student List Screen
 const StudentListScreen = ({ className, students, onStudentSelect, onBack, selectedStudents, teacherName }) => {
+  const isInfantil = className.includes("INFANTIL");
+  const backgroundClass = isInfantil ? "min-h-screen bg-blue-600 p-6" : "min-h-screen bg-gray-100 p-6";
+  const titleColor = isInfantil ? "text-white" : "text-gray-800";
+  
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className={backgroundClass}>
       <div className="max-w-2xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <button
@@ -82,13 +86,18 @@ const StudentListScreen = ({ className, students, onStudentSelect, onBack, selec
           >
             ← Volver
           </button>
-          <h2 className="text-2xl font-bold text-gray-800">{className}</h2>
+          <div className="text-center">
+            <h2 className={`text-2xl font-bold ${titleColor}`}>{className}</h2>
+            {teacherName && (
+              <p className={`text-sm ${titleColor} opacity-90 mt-1`}>{teacherName.toUpperCase()}</p>
+            )}
+          </div>
           <div></div>
         </div>
         
         <div className="bg-white rounded-lg shadow-lg">
-          <div className="p-4 border-b">
-            <h3 className="text-lg font-semibold">Lista de Estudiantes ({students.length})</h3>
+          <div className="p-4 border-b" style={{ backgroundColor: "#F97316" }}>
+            <h3 className="text-lg font-semibold text-black">SELECCIONAR ALUMNO/A ({students.length})</h3>
           </div>
           
           <div className="max-h-96 overflow-y-auto">
