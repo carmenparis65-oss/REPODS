@@ -127,15 +127,15 @@ async def get_class_settings():
     if not classes:
         # Initialize default classes if none exist
         default_classes = [
-            {"class_name": "INFANTIL 3 AÑOS", "teacher_name": "Profesor/a", "background_color": "#EF4444"},
-            {"class_name": "INFANTIL 4 AÑOS", "teacher_name": "Profesor/a", "background_color": "#F97316"},
-            {"class_name": "INFANTIL 5 AÑOS", "teacher_name": "Profesor/a", "background_color": "#EAB308"},
-            {"class_name": "1º DE PRIMARIA", "teacher_name": "Profesor/a", "background_color": "#22C55E"},
-            {"class_name": "2º DE PRIMARIA", "teacher_name": "Profesor/a", "background_color": "#06B6D4"},
-            {"class_name": "3º DE PRIMARIA", "teacher_name": "Profesor/a", "background_color": "#3B82F6"},
-            {"class_name": "4º DE PRIMARIA", "teacher_name": "Profesor/a", "background_color": "#8B5CF6"},
-            {"class_name": "5º DE PRIMARIA", "teacher_name": "Profesor/a", "background_color": "#EC4899"},
-            {"class_name": "6º DE PRIMARIA", "teacher_name": "Profesor/a", "background_color": "#6B7280"}
+            {"class_name": "INFANTIL 3 AÑOS", "teacher_name": "Profesor/a", "background_color": "#3B82F6"},
+            {"class_name": "INFANTIL 4 AÑOS", "teacher_name": "Profesor/a", "background_color": "#3B82F6"},
+            {"class_name": "INFANTIL 5 AÑOS", "teacher_name": "Profesor/a", "background_color": "#3B82F6"},
+            {"class_name": "1º DE PRIMARIA", "teacher_name": "Profesor/a", "background_color": "#F97316"},
+            {"class_name": "2º DE PRIMARIA", "teacher_name": "Profesor/a", "background_color": "#F97316"},
+            {"class_name": "3º DE PRIMARIA", "teacher_name": "Profesor/a", "background_color": "#F97316"},
+            {"class_name": "4º DE PRIMARIA", "teacher_name": "Profesor/a", "background_color": "#84CC16"},
+            {"class_name": "5º DE PRIMARIA", "teacher_name": "Profesor/a", "background_color": "#84CC16"},
+            {"class_name": "6º DE PRIMARIA", "teacher_name": "Profesor/a", "background_color": "#84CC16"}
         ]
         
         for class_data in default_classes:
