@@ -90,8 +90,17 @@ const StudentListScreen = ({ className, students, onStudentSelect, onBack, selec
     titleColor = "text-white";
   }
   
+  let backgroundColor = "#F3F4F6"; // gray-100 default
+  if (isInfantil) {
+    backgroundColor = "#93C5FD"; // blue-300 (más claro que el anterior)
+  } else if (isPrimaria123) {
+    backgroundColor = "#F97316"; // orange-500
+  } else if (isPrimaria456) {
+    backgroundColor = "#84CC16"; // lime-500
+  }
+  
   return (
-    <div className={backgroundClass}>
+    <div className={backgroundClass} style={{ backgroundColor }}>
       <div className="max-w-2xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <button
