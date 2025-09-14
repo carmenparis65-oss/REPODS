@@ -700,6 +700,11 @@ function App() {
     }
   };
   
+  const getTeacherName = (className) => {
+    const classInfo = classes.find(c => c.class_name === className);
+    return classInfo ? classInfo.teacher_name : "";
+  };
+  
   // Render current screen
   switch (currentScreen) {
     case "home":
