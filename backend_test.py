@@ -254,6 +254,7 @@ class BackendTester:
         try:
             update_data = {
                 "mother_name": "Carmen López Ruiz (Actualizado)",
+                "father_name": "José García Martín (Actualizado)",
                 "allergies": "Alergia a los frutos secos y lactosa",
                 "comments": "Estudiante muy aplicada - Actualizado"
             }
