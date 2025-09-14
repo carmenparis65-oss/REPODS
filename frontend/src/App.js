@@ -225,28 +225,28 @@ const SettingsScreen = ({ onBack, onAddStudent, onEditStudent, onAdvancedOptions
         <div className="space-y-4">
           <button
             onClick={onAddStudent}
-            className="w-full bg-green-600 text-white p-4 rounded-lg font-semibold hover:bg-green-700 transition-colors"
+            className="w-full bg-blue-600 text-white p-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
             AGREGAR ESTUDIANTE
           </button>
           
           <button
             onClick={onEditStudent}
-            className="w-full bg-yellow-600 text-white p-4 rounded-lg font-semibold hover:bg-yellow-700 transition-colors"
+            className="w-full bg-blue-600 text-white p-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
             EDITAR ESTUDIANTE
           </button>
           
           <button
             onClick={onAdvancedOptions}
-            className="w-full bg-purple-600 text-white p-4 rounded-lg font-semibold hover:bg-purple-700 transition-colors"
+            className="w-full bg-blue-600 text-white p-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
-            OPCIONES AVANZADAS
+            EDITAR PROFESORES
           </button>
           
           <button
             onClick={onBack}
-            className="w-full bg-gray-600 text-white p-4 rounded-lg font-semibold hover:bg-gray-700 transition-colors"
+            className="w-full bg-blue-600 text-white p-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
             VOLVER AL MENÚ
           </button>
