@@ -31,30 +31,35 @@ const HomeScreen = ({ onContinue, schoolName }) => {
   );
 };
 
-// Main Screen with Classes
+// Main Screen with Classes - Mobile Design
 const MainScreen = ({ classes, onClassSelect, onSettingsClick }) => {
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">Seleccionar Clase</h2>
+    <div className="min-h-screen bg-white p-4">
+      <div className="max-w-md mx-auto">
+        {/* Title */}
+        <h1 className="text-2xl font-bold text-center mb-6 text-black">C.E.I.P JOSEFINA CARABIAS</h1>
         
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        {/* Subtitle with pink background */}
+        <div className="bg-pink-300 text-black font-bold text-lg text-center py-3 mb-6 rounded-lg">
+          SELECCIONAR AULA:
+        </div>
+        
+        {/* Vertical buttons */}
+        <div className="space-y-3 mb-8">
           {classes.map((classItem, index) => (
             <button
               key={classItem.id}
               onClick={() => onClassSelect(classItem.class_name)}
-              className="p-6 rounded-lg text-white font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg"
+              className="w-full p-4 rounded-lg text-black font-bold text-lg hover:opacity-90 transition-opacity shadow-md"
               style={{ backgroundColor: classItem.background_color }}
             >
-              <div className="text-center">
-                <div className="text-sm mb-2">{classItem.class_name}</div>
-                <div className="text-xs opacity-90">{classItem.teacher_name.toUpperCase()}</div>
-              </div>
+              {classItem.class_name} - {classItem.teacher_name.toUpperCase()}
             </button>
           ))}
         </div>
         
-        <div className="fixed bottom-6 left-6">
+        {/* Settings button */}
+        <div className="fixed bottom-6 right-6">
           <button
             onClick={onSettingsClick}
             className="bg-gray-600 text-white p-3 rounded-full hover:bg-gray-700 transition-colors shadow-lg"
