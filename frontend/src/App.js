@@ -278,21 +278,23 @@ const StudentSelectionScreen = ({ students, onStudentSelect, onBack }) => {
           </div>
           
           <div className="max-h-96 overflow-y-auto">
-            {students.map((student) => (
-              <button
-                key={student.id}
-                onClick={() => onStudentSelect(student)}
-                className="w-full p-4 text-left hover:bg-gray-50 border-b border-gray-100 transition-colors"
-              >
-                <div className="flex justify-between items-center">
-                  <div>
-                    <div className="font-medium">{student.first_and_last_name}</div>
-                    <div className="text-sm text-gray-600">{student.class_name}</div>
+            {students
+              .sort((a, b) => a.first_and_last_name.toLowerCase().localeCompare(b.first_and_last_name.toLowerCase()))
+              .map((student) => (
+                <button
+                  key={student.id}
+                  onClick={() => onStudentSelect(student)}
+                  className="w-full p-4 text-left hover:bg-gray-50 border-b border-gray-100 transition-colors"
+                >
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <div className="font-medium">{student.first_and_last_name}</div>
+                      <div className="text-sm text-gray-600">{student.class_name}</div>
+                    </div>
+                    <div className="text-blue-600 text-sm">Editar →</div>
                   </div>
-                  <div className="text-blue-600 text-sm">Editar →</div>
-                </div>
-              </button>
-            ))}
+                </button>
+              ))}
           </div>
           
           {students.length === 0 && (
