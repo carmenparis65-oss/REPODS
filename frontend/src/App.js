@@ -86,13 +86,13 @@ const StudentListScreen = ({ className, students, onStudentSelect, onBack, selec
   
   if (isInfantil) {
     backgroundClass = "min-h-screen p-6";
-    titleColor = "text-white";
+    titleColor = "text-black";
   } else if (isPrimaria123) {
     backgroundClass = "min-h-screen p-6";
-    titleColor = "text-white";
+    titleColor = "text-black";
   } else if (isPrimaria456) {
     backgroundClass = "min-h-screen p-6";
-    titleColor = "text-white";
+    titleColor = "text-black";
   }
   
   let backgroundColor = "#F3F4F6"; // gray-100 default
