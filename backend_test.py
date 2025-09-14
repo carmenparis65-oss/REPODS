@@ -191,13 +191,17 @@ class BackendTester:
                     "first_and_last_name": "Ana Martín Sánchez",
                     "class_name": class_name,
                     "mother_name": "Isabel Sánchez",
-                    "mother_phone": "666111222"
+                    "mother_phone": "666111222",
+                    "father_name": "Miguel Martín Torres",
+                    "father_phone": "666555777"
                 },
                 {
                     "first_and_last_name": "Carlos Rodríguez Pérez",
                     "class_name": class_name,
                     "mother_name": "Pilar Pérez",
-                    "mother_phone": "666333444"
+                    "mother_phone": "666333444",
+                    "father_name": "Antonio Rodríguez Silva",
+                    "father_phone": "666888999"
                 }
             ]
             
