@@ -35,15 +35,46 @@
     -->
         <!-- Logo removido según solicitud del usuario -->
         <style>
-            /* Ocultar cualquier badge de Emergent */
+            /* Ocultar completamente cualquier badge de Emergent */
             #emergent-badge,
             [id*="emergent"],
             [class*="emergent"],
-            a[href*="emergent"] {
+            a[href*="emergent"],
+            a[href*="emergent.sh"] {
                 display: none !important;
                 visibility: hidden !important;
+                opacity: 0 !important;
+                pointer-events: none !important;
+                position: absolute !important;
+                left: -9999px !important;
+                top: -9999px !important;
             }
         </style>
+        <script>
+            // Remover cualquier badge de Emergent que se genere dinámicamente
+            window.addEventListener('DOMContentLoaded', function() {
+                function removeBadge() {
+                    const badges = document.querySelectorAll('[id*="emergent"], [class*="emergent"], a[href*="emergent"]');
+                    badges.forEach(badge => {
+                        badge.style.display = 'none';
+                        badge.remove();
+                    });
+                }
+                
+                // Ejecutar inmediatamente
+                removeBadge();
+                
+                // Ejecutar cada 100ms por 5 segundos para atrapar badges generados dinámicamente
+                let attempts = 0;
+                const interval = setInterval(() => {
+                    removeBadge();
+                    attempts++;
+                    if (attempts > 50) {
+                        clearInterval(interval);
+                    }
+                }, 100);
+            });
+        </script>
         <script>
             !(function (t, e) {
                 var o, n, p, r;
