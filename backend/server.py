@@ -31,6 +31,7 @@ class Student(BaseModel):
     class_name: str
     mother_name: str = ""
     mother_phone: str = ""
+    father_name: str = ""
     father_phone: str = ""
     allergies: str = ""
     comments: str = ""
@@ -40,6 +41,7 @@ class StudentCreate(BaseModel):
     class_name: str
     mother_name: str = ""
     mother_phone: str = ""
+    father_name: str = ""
     father_phone: str = ""
     allergies: str = ""
     comments: str = ""
@@ -49,6 +51,7 @@ class StudentUpdate(BaseModel):
     class_name: Optional[str] = None
     mother_name: Optional[str] = None
     mother_phone: Optional[str] = None
+    father_name: Optional[str] = None
     father_phone: Optional[str] = None
     allergies: Optional[str] = None
     comments: Optional[str] = None
