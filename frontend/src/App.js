@@ -124,9 +124,12 @@ const StudentListScreen = ({ className, students, onStudentSelect, onBack, selec
         </div>
         
         <div className="bg-white rounded-lg shadow-lg">
-          <div className="p-4 border-b mb-4" style={{ backgroundColor: "#F97316" }}>
-            <h3 className="text-lg font-semibold text-black">SELECCIONAR ALUMNO/A ({students.length})</h3>
+          <div className="p-4 border-b" style={{ backgroundColor: "#F97316" }}>
+            <h3 className={`text-lg font-semibold ${isPrimaria123 ? 'text-yellow-400' : 'text-black'}`}>SELECCIONAR ALUMNO/A ({students.length})</h3>
           </div>
+          
+          {/* Separator block with same background color */}
+          <div className="h-4" style={{ backgroundColor }}></div>
           
           <div className="max-h-96 overflow-y-auto px-4">
             {students.map((student) => (
