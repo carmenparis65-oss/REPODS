@@ -73,8 +73,22 @@ const MainScreen = ({ classes, onClassSelect, onSettingsClick }) => {
 // Student List Screen
 const StudentListScreen = ({ className, students, onStudentSelect, onBack, selectedStudents, teacherName }) => {
   const isInfantil = className.includes("INFANTIL");
-  const backgroundClass = isInfantil ? "min-h-screen bg-blue-600 p-6" : "min-h-screen bg-gray-100 p-6";
-  const titleColor = isInfantil ? "text-white" : "text-gray-800";
+  const isPrimaria123 = ["1º DE PRIMARIA", "2º DE PRIMARIA", "3º DE PRIMARIA"].includes(className);
+  const isPrimaria456 = ["4º DE PRIMARIA", "5º DE PRIMARIA", "6º DE PRIMARIA"].includes(className);
+  
+  let backgroundClass = "min-h-screen bg-gray-100 p-6";
+  let titleColor = "text-gray-800";
+  
+  if (isInfantil) {
+    backgroundClass = "min-h-screen p-6";
+    titleColor = "text-white";
+  } else if (isPrimaria123) {
+    backgroundClass = "min-h-screen p-6";
+    titleColor = "text-white";
+  } else if (isPrimaria456) {
+    backgroundClass = "min-h-screen p-6";
+    titleColor = "text-white";
+  }
   
   return (
     <div className={backgroundClass}>
