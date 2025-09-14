@@ -94,9 +94,9 @@ const StudentListScreen = ({ className, students, onStudentSelect, onBack, selec
   if (isInfantil) {
     backgroundColor = "#93C5FD"; // blue-300 (más claro que el anterior)
   } else if (isPrimaria123) {
-    backgroundColor = "#F97316"; // orange-500
+    backgroundColor = "#FB923C"; // orange-400 (más claro)
   } else if (isPrimaria456) {
-    backgroundColor = "#84CC16"; // lime-500
+    backgroundColor = "#A3E635"; // lime-400 (más claro)
   }
   
   return (
