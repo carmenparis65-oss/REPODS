@@ -8,7 +8,7 @@ const API = `${BACKEND_URL}/api`;
 // Home Screen Component
 const HomeScreen = ({ onContinue, schoolName }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 to-purple-700 flex flex-col items-center justify-center text-white">
+    <div className="min-h-screen bg-white flex flex-col items-center justify-center">
       <div className="text-center">
         <div className="mb-8">
           <img 
@@ -17,12 +17,12 @@ const HomeScreen = ({ onContinue, schoolName }) => {
             className="w-48 h-48 mx-auto rounded-lg shadow-lg object-contain bg-white p-2"
           />
         </div>
-        <h1 className="text-4xl font-bold mb-2">{schoolName}</h1>
-        <p className="text-xl mb-8 opacity-90">CONTROL DE ALUMNOS</p>
+        <h1 className="text-4xl font-bold mb-2 text-blue-800">{schoolName}</h1>
+        <p className="text-xl mb-8 text-blue-700">CONTROL DE ALUMNOS</p>
         
         <button
           onClick={onContinue}
-          className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors shadow-lg"
+          className="bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors shadow-lg"
         >
           Continuar
         </button>
