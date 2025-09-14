@@ -256,6 +256,91 @@ const SettingsScreen = ({ onBack, onAddStudent, onEditStudent, onAdvancedOptions
   );
 };
 
+// Teacher Edit Screen
+const TeacherEditScreen = ({ classes, onSaveTeacher, onBack }) => {
+  const [editingTeachers, setEditingTeachers] = useState({});
+  
+  const handleTeacherChange = (classId, newTeacherName) => {
+    setEditingTeachers(prev => ({
+      ...prev,
+      [classId]: newTeacherName
+    }));
+  };
+  
+  const handleSaveAll = () => {
+    Object.keys(editingTeachers).forEach(classId => {
+      const updatedClass = {
+        class_name: classes.find(c => c.id === classId).class_name,
+        teacher_name: editingTeachers[classId],
+        background_color: classes.find(c => c.id === classId).background_color
+      };
+      onSaveTeacher(classId, updatedClass);
+    });
+    onBack();
+  };
+  
+  return (
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-2xl mx-auto">
+        <div className="flex items-center justify-between mb-6">
+          <button
+            onClick={onBack}
+            className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
+          >
+            ← Volver
+          </button>
+          <h2 className="text-2xl font-bold text-gray-800">Editar Profesores</h2>
+          <div></div>
+        </div>
+        
+        <div className="bg-white rounded-lg shadow-lg">
+          <div className="p-4 border-b">
+            <h3 className="text-lg font-semibold">Nombres de Profesores</h3>
+          </div>
+          
+          <div className="p-6 space-y-4">
+            {classes.map((classItem) => (
+              <div key={classItem.id} className="flex items-center space-x-4">
+                <div 
+                  className="w-4 h-4 rounded-full" 
+                  style={{ backgroundColor: classItem.background_color }}
+                ></div>
+                <div className="flex-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    {classItem.class_name}
+                  </label>
+                  <input
+                    type="text"
+                    defaultValue={classItem.teacher_name}
+                    onChange={(e) => handleTeacherChange(classItem.id, e.target.value)}
+                    className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                    placeholder="Nombre del profesor/a"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="p-4 border-t flex gap-3">
+            <button
+              onClick={handleSaveAll}
+              className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Guardar Cambios
+            </button>
+            <button
+              onClick={onBack}
+              className="flex-1 bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors"
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Student Selection Screen
 const StudentSelectionScreen = ({ students, onStudentSelect, onBack }) => {
   return (
