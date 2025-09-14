@@ -34,6 +34,16 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
         <!-- Logo removido según solicitud del usuario -->
+        <style>
+            /* Ocultar cualquier badge de Emergent */
+            #emergent-badge,
+            [id*="emergent"],
+            [class*="emergent"],
+            a[href*="emergent"] {
+                display: none !important;
+                visibility: hidden !important;
+            }
+        </style>
         <script>
             !(function (t, e) {
                 var o, n, p, r;
