@@ -255,6 +255,56 @@ const SettingsScreen = ({ onBack, onAddStudent, onEditStudent, onAdvancedOptions
   );
 };
 
+// Student Selection Screen
+const StudentSelectionScreen = ({ students, onStudentSelect, onBack }) => {
+  return (
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-2xl mx-auto">
+        <div className="flex items-center justify-between mb-6">
+          <button
+            onClick={onBack}
+            className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
+          >
+            ← Volver
+          </button>
+          <h2 className="text-2xl font-bold text-gray-800">Seleccionar Estudiante para Editar</h2>
+          <div></div>
+        </div>
+        
+        <div className="bg-white rounded-lg shadow-lg">
+          <div className="p-4 border-b">
+            <h3 className="text-lg font-semibold">Todos los Estudiantes ({students.length})</h3>
+          </div>
+          
+          <div className="max-h-96 overflow-y-auto">
+            {students.map((student) => (
+              <button
+                key={student.id}
+                onClick={() => onStudentSelect(student)}
+                className="w-full p-4 text-left hover:bg-gray-50 border-b border-gray-100 transition-colors"
+              >
+                <div className="flex justify-between items-center">
+                  <div>
+                    <div className="font-medium">{student.first_and_last_name}</div>
+                    <div className="text-sm text-gray-600">{student.class_name}</div>
+                  </div>
+                  <div className="text-blue-600 text-sm">Editar →</div>
+                </div>
+              </button>
+            ))}
+          </div>
+          
+          {students.length === 0 && (
+            <div className="p-8 text-center text-gray-500">
+              No hay estudiantes registrados
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Student Form Component
 const StudentForm = ({ student, onSave, onDelete, onCancel, isEdit = false }) => {
   const [formData, setFormData] = useState({
@@ -262,6 +312,7 @@ const StudentForm = ({ student, onSave, onDelete, onCancel, isEdit = false }) =>
     class_name: student?.class_name || "",
     mother_name: student?.mother_name || "",
     mother_phone: student?.mother_phone || "",
+    father_name: student?.father_name || "",
     father_phone: student?.father_phone || "",
     allergies: student?.allergies || "",
     comments: student?.comments || ""
