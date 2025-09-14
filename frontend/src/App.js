@@ -211,15 +211,8 @@ const SettingsScreen = ({ onBack, onAddStudent, onEditStudent, onAdvancedOptions
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-md mx-auto">
-        <div className="flex items-center justify-between mb-6">
-          <button
-            onClick={onBack}
-            className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
-          >
-            ← Volver
-          </button>
-          <h2 className="text-2xl font-bold text-gray-800">Opciones</h2>
-          <div></div>
+        <div className="flex items-center justify-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">OPCIONES AVANZADAS</h2>
         </div>
         
         <div className="space-y-4">
