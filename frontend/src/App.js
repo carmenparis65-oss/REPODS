@@ -139,6 +139,7 @@ const StudentDetailsModal = ({ student, onClose, onAddStudent, onFinish }) => {
             <div><strong>Clase:</strong> {student.class_name}</div>
             {student.mother_name && <div><strong>Nombre de la Madre:</strong> {student.mother_name}</div>}
             {student.mother_phone && <div><strong>Teléfono de la Madre:</strong> {student.mother_phone}</div>}
+            {student.father_name && <div><strong>Nombre del Padre:</strong> {student.father_name}</div>}
             {student.father_phone && <div><strong>Teléfono del Padre:</strong> {student.father_phone}</div>}
             {student.allergies && <div><strong>Alergias:</strong> {student.allergies}</div>}
             {student.comments && <div><strong>Comentarios:</strong> {student.comments}</div>}
