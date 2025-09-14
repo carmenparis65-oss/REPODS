@@ -741,110 +741,110 @@ function App() {
     <>
       {(() => {
         switch (currentScreen) {
-    case "home":
-      return (
-        <HomeScreen
-          onContinue={() => setCurrentScreen("main")}
-          schoolName={schoolName}
-        />
-      );
-      
-    case "main":
-      return (
-        <MainScreen
-          classes={classes}
-          onClassSelect={handleClassSelect}
-          onSettingsClick={() => setCurrentScreen("settings")}
-        />
-      );
-      
-    case "studentList":
-      return (
-        <>
-          <StudentListScreen
-            className={selectedClass}
-            students={students}
-            onStudentSelect={handleStudentSelect}
-            onBack={() => setCurrentScreen("main")}
-            selectedStudents={selectedStudents}
-            teacherName={getTeacherName(selectedClass)}
-          />
-          {selectedStudent && (
-            <StudentDetailsModal
-              student={selectedStudent}
-              onClose={() => setSelectedStudent(null)}
-              onAddStudent={handleAddStudent}
-              onAddAndFinish={handleAddAndFinish}
-            />
-          )}
-        </>
-      );
-      
-    case "studentsToCall":
-      return (
-        <StudentsToCallScreen
-          selectedStudents={selectedStudents}
-          onBackToMenu={() => {
-            setCurrentScreen("main");
-            setSelectedStudents([]);
-          }}
-        />
-      );
-      
-    case "settings":
-      return (
-        <>
-          <SettingsScreen
-            onBack={() => setCurrentScreen("main")}
-            onAddStudent={() => {
-              setEditingStudent(null);
-              setShowStudentForm(true);
-            }}
-            onEditStudent={() => {
-              // Go to student selection screen
-              setCurrentScreen("studentSelection");
-            }}
-            onAdvancedOptions={() => {
-              setCurrentScreen("teacherEdit");
-            }}
-          />
-          {showStudentForm && (
-            <StudentForm
-              student={editingStudent}
-              onSave={handleSaveStudent}
-              onDelete={handleDeleteStudent}
-              onCancel={() => {
-                setShowStudentForm(false);
-                setEditingStudent(null);
-              }}
-              isEdit={!!editingStudent}
-            />
-          )}
-        </>
-      );
-      
-    case "studentSelection":
-      return (
-        <StudentSelectionScreen
-          students={allStudents}
-          onStudentSelect={(student) => {
-            setEditingStudent(student);
-            setShowStudentForm(true);
-            setCurrentScreen("settings");
-          }}
-          onBack={() => setCurrentScreen("settings")}
-        />
-      );
-      
-    case "teacherEdit":
-      return (
-        <TeacherEditScreen
-          classes={classes}
-          onSaveTeacher={handleSaveTeacher}
-          onBack={() => setCurrentScreen("settings")}
-        />
-      );
-      
+          case "home":
+            return (
+              <HomeScreen
+                onContinue={() => setCurrentScreen("main")}
+                schoolName={schoolName}
+              />
+            );
+            
+          case "main":
+            return (
+              <MainScreen
+                classes={classes}
+                onClassSelect={handleClassSelect}
+                onSettingsClick={() => setCurrentScreen("settings")}
+              />
+            );
+            
+          case "studentList":
+            return (
+              <>
+                <StudentListScreen
+                  className={selectedClass}
+                  students={students}
+                  onStudentSelect={handleStudentSelect}
+                  onBack={() => setCurrentScreen("main")}
+                  selectedStudents={selectedStudents}
+                  teacherName={getTeacherName(selectedClass)}
+                />
+                {selectedStudent && (
+                  <StudentDetailsModal
+                    student={selectedStudent}
+                    onClose={() => setSelectedStudent(null)}
+                    onAddStudent={handleAddStudent}
+                    onAddAndFinish={handleAddAndFinish}
+                  />
+                )}
+              </>
+            );
+            
+          case "studentsToCall":
+            return (
+              <StudentsToCallScreen
+                selectedStudents={selectedStudents}
+                onBackToMenu={() => {
+                  setCurrentScreen("main");
+                  setSelectedStudents([]);
+                }}
+              />
+            );
+            
+          case "settings":
+            return (
+              <>
+                <SettingsScreen
+                  onBack={() => setCurrentScreen("main")}
+                  onAddStudent={() => {
+                    setEditingStudent(null);
+                    setShowStudentForm(true);
+                  }}
+                  onEditStudent={() => {
+                    // Go to student selection screen
+                    setCurrentScreen("studentSelection");
+                  }}
+                  onAdvancedOptions={() => {
+                    setCurrentScreen("teacherEdit");
+                  }}
+                />
+                {showStudentForm && (
+                  <StudentForm
+                    student={editingStudent}
+                    onSave={handleSaveStudent}
+                    onDelete={handleDeleteStudent}
+                    onCancel={() => {
+                      setShowStudentForm(false);
+                      setEditingStudent(null);
+                    }}
+                    isEdit={!!editingStudent}
+                  />
+                )}
+              </>
+            );
+            
+          case "studentSelection":
+            return (
+              <StudentSelectionScreen
+                students={allStudents}
+                onStudentSelect={(student) => {
+                  setEditingStudent(student);
+                  setShowStudentForm(true);
+                  setCurrentScreen("settings");
+                }}
+                onBack={() => setCurrentScreen("settings")}
+              />
+            );
+            
+          case "teacherEdit":
+            return (
+              <TeacherEditScreen
+                classes={classes}
+                onSaveTeacher={handleSaveTeacher}
+                onBack={() => setCurrentScreen("settings")}
+              />
+            );
+            
           default:
             return <div>Screen not found</div>;
         }
