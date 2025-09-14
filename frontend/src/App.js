@@ -24,7 +24,7 @@ const HomeScreen = ({ onContinue, schoolName }) => {
           onClick={onContinue}
           className="bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors shadow-lg"
         >
-          EMPEZAR
+          Continuar
         </button>
       </div>
     </div>
@@ -71,6 +71,143 @@ const MainScreen = ({ classes, onClassSelect, onSettingsClick }) => {
   );
 };
 
+// Teacher Edit Screen
+const TeacherEditScreen = ({ classes, onSaveTeacher, onBack }) => {
+  const [editingTeachers, setEditingTeachers] = useState({});
+  
+  const handleTeacherChange = (classId, newTeacherName) => {
+    setEditingTeachers(prev => ({
+      ...prev,
+      [classId]: newTeacherName
+    }));
+  };
+  
+  const handleSaveAll = () => {
+    Object.keys(editingTeachers).forEach(classId => {
+      const updatedClass = {
+        class_name: classes.find(c => c.id === classId).class_name,
+        teacher_name: editingTeachers[classId],
+        background_color: classes.find(c => c.id === classId).background_color
+      };
+      onSaveTeacher(classId, updatedClass);
+    });
+    onBack();
+  };
+  
+  return (
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-2xl mx-auto">
+        <div className="flex items-center justify-between mb-6">
+          <button
+            onClick={onBack}
+            className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
+          >
+            ← Volver
+          </button>
+          <h2 className="text-2xl font-bold text-gray-800">Editar Profesores</h2>
+          <div></div>
+        </div>
+        
+        <div className="bg-white rounded-lg shadow-lg">
+          <div className="p-4 border-b">
+            <h3 className="text-lg font-semibold">Nombres de Profesores</h3>
+          </div>
+          
+          <div className="p-6 space-y-4">
+            {classes.map((classItem) => (
+              <div key={classItem.id} className="flex items-center space-x-4">
+                <div 
+                  className="w-4 h-4 rounded-full" 
+                  style={{ backgroundColor: classItem.background_color }}
+                ></div>
+                <div className="flex-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    {classItem.class_name}
+                  </label>
+                  <input
+                    type="text"
+                    defaultValue={classItem.teacher_name}
+                    onChange={(e) => handleTeacherChange(classItem.id, e.target.value)}
+                    className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                    placeholder="Nombre del profesor/a"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="p-4 border-t flex gap-3">
+            <button
+              onClick={handleSaveAll}
+              className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Guardar Cambios
+            </button>
+            <button
+              onClick={onBack}
+              className="flex-1 bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors"
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Student Selection Screen
+const StudentSelectionScreen = ({ students, onStudentSelect, onBack }) => {
+  return (
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-2xl mx-auto">
+        <div className="flex items-center justify-between mb-6">
+          <button
+            onClick={onBack}
+            className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
+          >
+            ← Volver
+          </button>
+          <h2 className="text-2xl font-bold text-gray-800">Seleccionar Estudiante para Editar</h2>
+          <div></div>
+        </div>
+        
+        <div className="bg-white rounded-lg shadow-lg">
+          <div className="p-4 border-b">
+            <h3 className="text-lg font-semibold">Todos los Estudiantes ({students.length})</h3>
+          </div>
+          
+          <div className="max-h-96 overflow-y-auto">
+            {students
+              .sort((a, b) => a.first_and_last_name.toLowerCase().localeCompare(b.first_and_last_name.toLowerCase()))
+              .map((student) => (
+                <button
+                  key={student.id}
+                  onClick={() => onStudentSelect(student)}
+                  className="w-full p-4 text-left hover:bg-gray-50 border-b border-gray-100 transition-colors"
+                >
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <div className="font-medium">{student.first_and_last_name}</div>
+                      <div className="text-sm text-gray-600">{student.class_name}</div>
+                    </div>
+                    <div className="text-blue-600 text-sm">Editar →</div>
+                  </div>
+                </button>
+              ))}
+          </div>
+          
+          {students.length === 0 && (
+            <div className="p-8 text-center text-gray-500">
+              No hay estudiantes registrados
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Student List Screen
 const StudentListScreen = ({ className, students, onStudentSelect, onBack, selectedStudents, teacherName }) => {
   const isInfantil = className.includes("INFANTIL");
@@ -79,7 +216,7 @@ const StudentListScreen = ({ className, students, onStudentSelect, onBack, selec
   
   let backgroundColor = "#F3F4F6"; // gray-100 default
   if (isInfantil) {
-    backgroundColor = "#93C5FD"; // blue-300 (más claro que el anterior)
+    backgroundColor = "#93C5FD"; // blue-300 (más claro)
   } else if (isPrimaria123) {
     backgroundColor = "#FB923C"; // orange-400 (más claro)
   } else if (isPrimaria456) {
@@ -108,7 +245,7 @@ const StudentListScreen = ({ className, students, onStudentSelect, onBack, selec
         </div>
         
         <div className="bg-white rounded-lg shadow-lg">
-          <div className="p-4 border-b" style={{ backgroundColor: isPrimaria123 ? "#FBBF24" : "#F97316" }}>
+          <div className="p-4 border-b" style={{ backgroundColor: "#F97316" }}>
             <h3 className="text-lg font-semibold text-black">SELECCIONAR ALUMNO/A ({students.length})</h3>
           </div>
           
@@ -145,7 +282,7 @@ const StudentListScreen = ({ className, students, onStudentSelect, onBack, selec
 };
 
 // Student Details Modal
-const StudentDetailsModal = ({ student, onClose, onAddStudent, onFinish }) => {
+const StudentDetailsModal = ({ student, onClose, onAddStudent, onAddAndFinish }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg max-w-md w-full max-h-96 overflow-y-auto">
@@ -175,13 +312,13 @@ const StudentDetailsModal = ({ student, onClose, onAddStudent, onFinish }) => {
               onClick={() => onAddStudent(student)}
               className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
             >
-              Agregar Estudiante
+              AÑADIR OTRO
             </button>
             <button
-              onClick={onFinish}
-              className="flex-1 bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors"
+              onClick={() => onAddAndFinish(student)}
+              className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
             >
-              Finalizar
+              AGREGAR Y FINALIZAR
             </button>
           </div>
         </div>
@@ -274,6 +411,188 @@ const SettingsScreen = ({ onBack, onAddStudent, onEditStudent, onAdvancedOptions
   );
 };
 
+// Student Form Component
+const StudentForm = ({ student, onSave, onDelete, onCancel, isEdit = false }) => {
+  const [formData, setFormData] = useState({
+    first_and_last_name: student?.first_and_last_name || "",
+    class_name: student?.class_name || "",
+    mother_name: student?.mother_name || "",
+    mother_phone: student?.mother_phone || "",
+    father_name: student?.father_name || "",
+    father_phone: student?.father_phone || "",
+    allergies: student?.allergies || "",
+    comments: student?.comments || ""
+  });
+  
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  
+  const classes = [
+    "INFANTIL 3 AÑOS", "INFANTIL 4 AÑOS", "INFANTIL 5 AÑOS",
+    "1º DE PRIMARIA", "2º DE PRIMARIA", "3º DE PRIMARIA",
+    "4º DE PRIMARIA", "5º DE PRIMARIA", "6º DE PRIMARIA"
+  ];
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSave(formData);
+  };
+  
+  const handleDelete = () => {
+    setShowDeleteConfirm(false);
+    onDelete(student.id);
+  };
+  
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-lg max-w-md w-full max-h-96 overflow-y-auto">
+        <div className="p-6">
+          <h3 className="text-xl font-bold mb-4">
+            {isEdit ? "Editar Estudiante" : "Agregar Estudiante"}
+          </h3>
+          
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">Nombre y Apellidos *</label>
+              <input
+                type="text"
+                required
+                value={formData.first_and_last_name}
+                onChange={(e) => setFormData({...formData, first_and_last_name: e.target.value})}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">Clase *</label>
+              <select
+                required
+                value={formData.class_name}
+                onChange={(e) => setFormData({...formData, class_name: e.target.value})}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Seleccionar clase</option>
+                {classes.map(className => (
+                  <option key={className} value={className}>{className}</option>
+                ))}
+              </select>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">Nombre de la Madre</label>
+              <input
+                type="text"
+                value={formData.mother_name}
+                onChange={(e) => setFormData({...formData, mother_name: e.target.value})}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">Teléfono de la Madre</label>
+              <input
+                type="tel"
+                value={formData.mother_phone}
+                onChange={(e) => setFormData({...formData, mother_phone: e.target.value})}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">Nombre del Padre</label>
+              <input
+                type="text"
+                value={formData.father_name}
+                onChange={(e) => setFormData({...formData, father_name: e.target.value})}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">Teléfono del Padre</label>
+              <input
+                type="tel"
+                value={formData.father_phone}
+                onChange={(e) => setFormData({...formData, father_phone: e.target.value})}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">Alergias</label>
+              <input
+                type="text"
+                value={formData.allergies}
+                onChange={(e) => setFormData({...formData, allergies: e.target.value})}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">Comentarios</label>
+              <textarea
+                rows="3"
+                value={formData.comments}
+                onChange={(e) => setFormData({...formData, comments: e.target.value})}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            
+            <div className="flex gap-3 mt-6">
+              <button
+                type="submit"
+                className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                {isEdit ? "Actualizar" : "Crear"}
+              </button>
+              
+              <button
+                type="button"
+                onClick={onCancel}
+                className="flex-1 bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                Cancelar
+              </button>
+            </div>
+            
+            {isEdit && (
+              <button
+                type="button"
+                onClick={() => setShowDeleteConfirm(true)}
+                className="w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors mt-2"
+              >
+                ELIMINAR ESTUDIANTE
+              </button>
+            )}
+          </form>
+        </div>
+      </div>
+      
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-60">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
+            <h4 className="text-lg font-bold mb-4">¿Eliminar estudiante?</h4>
+            <p className="text-gray-600 mb-6">¿Estás seguro de que quieres eliminar este estudiante?</p>
+            <div className="flex gap-3">
+              <button
+                onClick={handleDelete}
+                className="flex-1 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors"
+              >
+                SÍ
+              </button>
+              <button
+                onClick={() => setShowDeleteConfirm(false)}
+                className="flex-1 bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                NO
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 // Main App Component
 function App() {
   const [currentScreen, setCurrentScreen] = useState("home");
@@ -283,10 +602,14 @@ function App() {
   const [students, setStudents] = useState([]);
   const [classes, setClasses] = useState([]);
   const [schoolName, setSchoolName] = useState("CEIP Josefina Carabias");
+  const [showStudentForm, setShowStudentForm] = useState(false);
+  const [editingStudent, setEditingStudent] = useState(null);
+  const [allStudents, setAllStudents] = useState([]);
   
   // Load initial data
   useEffect(() => {
     loadClasses();
+    loadAllStudents();
   }, []);
   
   const loadClasses = async () => {
@@ -295,6 +618,15 @@ function App() {
       setClasses(response.data);
     } catch (error) {
       console.error("Error loading classes:", error);
+    }
+  };
+  
+  const loadAllStudents = async () => {
+    try {
+      const response = await axios.get(`${API}/students`);
+      setAllStudents(response.data);
+    } catch (error) {
+      console.error("Error loading students:", error);
     }
   };
   
@@ -323,11 +655,58 @@ function App() {
       setSelectedStudents([...selectedStudents, student]);
     }
     setSelectedStudent(null);
+    setCurrentScreen("main");
   };
   
-  const handleFinish = () => {
+  const handleAddAndFinish = (student) => {
+    const isAlreadySelected = selectedStudents.some(s => s.id === student.id);
+    if (!isAlreadySelected) {
+      setSelectedStudents([...selectedStudents, student]);
+    }
     setSelectedStudent(null);
     setCurrentScreen("studentsToCall");
+  };
+  
+  const handleSaveStudent = async (studentData) => {
+    try {
+      if (editingStudent) {
+        await axios.put(`${API}/students/${editingStudent.id}`, studentData);
+      } else {
+        await axios.post(`${API}/students`, studentData);
+      }
+      
+      setShowStudentForm(false);
+      setEditingStudent(null);
+      loadAllStudents();
+      if (selectedClass) {
+        loadStudentsByClass(selectedClass);
+      }
+    } catch (error) {
+      console.error("Error saving student:", error);
+    }
+  };
+  
+  const handleDeleteStudent = async (studentId) => {
+    try {
+      await axios.delete(`${API}/students/${studentId}`);
+      setShowStudentForm(false);
+      setEditingStudent(null);
+      loadAllStudents();
+      if (selectedClass) {
+        loadStudentsByClass(selectedClass);
+      }
+    } catch (error) {
+      console.error("Error deleting student:", error);
+    }
+  };
+  
+  const handleSaveTeacher = async (classId, updatedClass) => {
+    try {
+      await axios.put(`${API}/classes/${classId}`, updatedClass);
+      loadClasses(); // Reload classes to see updated teacher names
+    } catch (error) {
+      console.error("Error updating teacher:", error);
+    }
   };
   
   const getTeacherName = (className) => {
@@ -370,7 +749,7 @@ function App() {
               student={selectedStudent}
               onClose={() => setSelectedStudent(null)}
               onAddStudent={handleAddStudent}
-              onFinish={handleFinish}
+              onAddAndFinish={handleAddAndFinish}
             />
           )}
         </>
@@ -389,11 +768,54 @@ function App() {
       
     case "settings":
       return (
-        <SettingsScreen
-          onBack={() => setCurrentScreen("main")}
-          onAddStudent={() => alert("Agregar estudiante - En desarrollo")}
-          onEditStudent={() => alert("Editar estudiante - En desarrollo")}
-          onAdvancedOptions={() => alert("Editar profesores - En desarrollo")}
+        <>
+          <SettingsScreen
+            onBack={() => setCurrentScreen("main")}
+            onAddStudent={() => {
+              setEditingStudent(null);
+              setShowStudentForm(true);
+            }}
+            onEditStudent={() => {
+              setCurrentScreen("studentSelection");
+            }}
+            onAdvancedOptions={() => {
+              setCurrentScreen("teacherEdit");
+            }}
+          />
+          {showStudentForm && (
+            <StudentForm
+              student={editingStudent}
+              onSave={handleSaveStudent}
+              onDelete={handleDeleteStudent}
+              onCancel={() => {
+                setShowStudentForm(false);
+                setEditingStudent(null);
+              }}
+              isEdit={!!editingStudent}
+            />
+          )}
+        </>
+      );
+      
+    case "studentSelection":
+      return (
+        <StudentSelectionScreen
+          students={allStudents}
+          onStudentSelect={(student) => {
+            setEditingStudent(student);
+            setShowStudentForm(true);
+            setCurrentScreen("settings");
+          }}
+          onBack={() => setCurrentScreen("settings")}
+        />
+      );
+      
+    case "teacherEdit":
+      return (
+        <TeacherEditScreen
+          classes={classes}
+          onSaveTeacher={handleSaveTeacher}
+          onBack={() => setCurrentScreen("settings")}
         />
       );
       

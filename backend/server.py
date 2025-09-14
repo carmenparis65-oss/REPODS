@@ -24,7 +24,7 @@ app = FastAPI()
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
-# Define Models
+# Define Models with father_name field
 class Student(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     first_and_last_name: str
@@ -125,7 +125,7 @@ async def delete_student(student_id: str):
 async def get_class_settings():
     classes = await db.class_settings.find().to_list(1000)
     if not classes:
-        # Initialize default classes if none exist
+        # Initialize default classes with correct colors
         default_classes = [
             {"class_name": "INFANTIL 3 AÑOS", "teacher_name": "Profesor/a", "background_color": "#3B82F6"},
             {"class_name": "INFANTIL 4 AÑOS", "teacher_name": "Profesor/a", "background_color": "#3B82F6"},
