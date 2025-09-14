@@ -108,7 +108,7 @@ const StudentListScreen = ({ className, students, onStudentSelect, onBack, selec
         </div>
         
         <div className="bg-white rounded-lg shadow-lg">
-          <div className="p-4 border-b" style={{ backgroundColor: "#F97316" }}>
+          <div className="p-4 border-b" style={{ backgroundColor: isPrimaria123 ? "#FBBF24" : "#F97316" }}>
             <h3 className="text-lg font-semibold text-black">SELECCIONAR ALUMNO/A ({students.length})</h3>
           </div>
           
