@@ -71,7 +71,7 @@ const MainScreen = ({ classes, onClassSelect, onSettingsClick }) => {
 };
 
 // Student List Screen
-const StudentListScreen = ({ className, students, onStudentSelect, onBack, selectedStudents }) => {
+const StudentListScreen = ({ className, students, onStudentSelect, onBack, selectedStudents, teacherName }) => {
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-2xl mx-auto">
