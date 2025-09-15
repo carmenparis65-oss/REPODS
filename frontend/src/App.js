@@ -234,6 +234,8 @@ const SettingsScreen = ({ onBack }) => {
 function App() {
   const [currentScreen, setCurrentScreen] = useState("home");
   const [selectedClass, setSelectedClass] = useState("");
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [selectedStudents, setSelectedStudents] = useState([]);
   const [students, setStudents] = useState([]);
   const [classes, setClasses] = useState([]);
   
@@ -266,6 +268,29 @@ function App() {
     setCurrentScreen("studentList");
   };
   
+  const handleStudentSelect = (student) => {
+    setSelectedStudent(student);
+  };
+  
+  const handleAddStudent = (student) => {
+    const isAlreadySelected = selectedStudents.some(s => s.id === student.id);
+    if (!isAlreadySelected) {
+      setSelectedStudents([...selectedStudents, student]);
+    }
+    setSelectedStudent(null);
+    setCurrentScreen("main");
+  };
+  
+  const handleAddAndFinish = (student) => {
+    const isAlreadySelected = selectedStudents.some(s => s.id === student.id);
+    if (!isAlreadySelected) {
+      setSelectedStudents([...selectedStudents, student]);
+    }
+    setSelectedStudent(null);
+    alert(`Estudiante ${student.first_and_last_name} agregado a la lista para llamar!`);
+    setCurrentScreen("main");
+  };
+  
   const getTeacherName = (className) => {
     const classInfo = classes.find(c => c.class_name === className);
     return classInfo ? classInfo.teacher_name : "";
@@ -287,12 +312,24 @@ function App() {
   
   if (currentScreen === "studentList") {
     return (
-      <StudentListScreen
-        className={selectedClass}
-        students={students}
-        onBack={() => setCurrentScreen("main")}
-        teacherName={getTeacherName(selectedClass)}
-      />
+      <>
+        <StudentListScreen
+          className={selectedClass}
+          students={students}
+          onBack={() => setCurrentScreen("main")}
+          teacherName={getTeacherName(selectedClass)}
+          onStudentSelect={handleStudentSelect}
+          selectedStudents={selectedStudents}
+        />
+        {selectedStudent && (
+          <StudentDetailsModal
+            student={selectedStudent}
+            onClose={() => setSelectedStudent(null)}
+            onAddStudent={handleAddStudent}
+            onAddAndFinish={handleAddAndFinish}
+          />
+        )}
+      </>
     );
   }
   
