@@ -328,8 +328,7 @@ function App() {
       setSelectedStudents([...selectedStudents, student]);
     }
     setSelectedStudent(null);
-    alert(`Estudiante ${student.first_and_last_name} agregado a la lista para llamar!`);
-    setCurrentScreen("main");
+    setCurrentScreen("studentsToCall");
   };
   
   const getTeacherName = (className) => {
