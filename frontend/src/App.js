@@ -749,8 +749,56 @@ function App() {
   
   if (currentScreen === "settings") {
     return (
-      <SettingsScreen 
-        onBack={() => setCurrentScreen("main")}
+      <>
+        <SettingsScreen 
+          onBack={() => setCurrentScreen("main")}
+          onAddStudent={() => {
+            setEditingStudent(null);
+            setShowStudentForm(true);
+          }}
+          onEditStudent={() => {
+            setCurrentScreen("studentSelection");
+          }}
+          onAdvancedOptions={() => {
+            setCurrentScreen("teacherEdit");
+          }}
+        />
+        {showStudentForm && (
+          <StudentForm
+            student={editingStudent}
+            onSave={handleSaveStudent}
+            onDelete={handleDeleteStudent}
+            onCancel={() => {
+              setShowStudentForm(false);
+              setEditingStudent(null);
+            }}
+            isEdit={!!editingStudent}
+          />
+        )}
+      </>
+    );
+  }
+  
+  if (currentScreen === "studentSelection") {
+    return (
+      <StudentSelectionScreen
+        students={allStudents}
+        onStudentSelect={(student) => {
+          setEditingStudent(student);
+          setShowStudentForm(true);
+          setCurrentScreen("settings");
+        }}
+        onBack={() => setCurrentScreen("settings")}
+      />
+    );
+  }
+  
+  if (currentScreen === "teacherEdit") {
+    return (
+      <TeacherEditScreen
+        classes={classes}
+        onSaveTeacher={handleSaveTeacher}
+        onBack={() => setCurrentScreen("settings")}
       />
     );
   }
