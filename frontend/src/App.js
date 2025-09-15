@@ -229,8 +229,327 @@ const StudentsToCallScreen = ({ selectedStudents, onBackToMenu }) => {
   );
 };
 
+// Student Form Component
+const StudentForm = ({ student, onSave, onDelete, onCancel, isEdit = false }) => {
+  const [formData, setFormData] = useState({
+    first_and_last_name: student?.first_and_last_name || "",
+    class_name: student?.class_name || "",
+    mother_name: student?.mother_name || "",
+    mother_phone: student?.mother_phone || "",
+    father_name: student?.father_name || "",
+    father_phone: student?.father_phone || "",
+    allergies: student?.allergies || "",
+    comments: student?.comments || ""
+  });
+  
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  
+  const classes = [
+    "INFANTIL 3 AÑOS", "INFANTIL 4 AÑOS", "INFANTIL 5 AÑOS",
+    "1º DE PRIMARIA", "2º DE PRIMARIA", "3º DE PRIMARIA",
+    "4º DE PRIMARIA", "5º DE PRIMARIA", "6º DE PRIMARIA"
+  ];
+  
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSave(formData);
+  };
+  
+  const handleDelete = () => {
+    setShowDeleteConfirm(false);
+    onDelete(student.id);
+  };
+  
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-lg max-w-md w-full max-h-96 overflow-y-auto">
+        <div className="p-6">
+          <h3 className="text-xl font-bold mb-4">
+            {isEdit ? "Editar Estudiante" : "Agregar Estudiante"}
+          </h3>
+          
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">Nombre y Apellidos *</label>
+              <input
+                type="text"
+                required
+                value={formData.first_and_last_name}
+                onChange={(e) => setFormData({...formData, first_and_last_name: e.target.value})}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">Clase *</label>
+              <select
+                required
+                value={formData.class_name}
+                onChange={(e) => setFormData({...formData, class_name: e.target.value})}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Seleccionar clase</option>
+                {classes.map(className => (
+                  <option key={className} value={className}>{className}</option>
+                ))}
+              </select>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">Nombre de la Madre</label>
+              <input
+                type="text"
+                value={formData.mother_name}
+                onChange={(e) => setFormData({...formData, mother_name: e.target.value})}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">Teléfono de la Madre</label>
+              <input
+                type="tel"
+                value={formData.mother_phone}
+                onChange={(e) => setFormData({...formData, mother_phone: e.target.value})}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">Nombre del Padre</label>
+              <input
+                type="text"
+                value={formData.father_name}
+                onChange={(e) => setFormData({...formData, father_name: e.target.value})}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">Teléfono del Padre</label>
+              <input
+                type="tel"
+                value={formData.father_phone}
+                onChange={(e) => setFormData({...formData, father_phone: e.target.value})}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">Alergias</label>
+              <input
+                type="text"
+                value={formData.allergies}
+                onChange={(e) => setFormData({...formData, allergies: e.target.value})}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium mb-1">Comentarios</label>
+              <textarea
+                rows="3"
+                value={formData.comments}
+                onChange={(e) => setFormData({...formData, comments: e.target.value})}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            
+            <div className="flex gap-3 mt-6">
+              <button
+                type="submit"
+                className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                {isEdit ? "Actualizar" : "Crear"}
+              </button>
+              
+              <button
+                type="button"
+                onClick={onCancel}
+                className="flex-1 bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                Cancelar
+              </button>
+            </div>
+            
+            {isEdit && (
+              <button
+                type="button"
+                onClick={() => setShowDeleteConfirm(true)}
+                className="w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors mt-2"
+              >
+                ELIMINAR ESTUDIANTE
+              </button>
+            )}
+          </form>
+        </div>
+      </div>
+      
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-60">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
+            <h4 className="text-lg font-bold mb-4">¿Eliminar estudiante?</h4>
+            <p className="text-gray-600 mb-6">¿Estás seguro de que quieres eliminar este estudiante?</p>
+            <div className="flex gap-3">
+              <button
+                onClick={handleDelete}
+                className="flex-1 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors"
+              >
+                SÍ
+              </button>
+              <button
+                onClick={() => setShowDeleteConfirm(false)}
+                className="flex-1 bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                NO
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Student Selection Screen for editing
+const StudentSelectionScreen = ({ students, onStudentSelect, onBack }) => {
+  return (
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-2xl mx-auto">
+        <div className="flex items-center justify-between mb-6">
+          <button
+            onClick={onBack}
+            className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
+          >
+            ← Volver
+          </button>
+          <h2 className="text-2xl font-bold text-gray-800">Seleccionar Estudiante para Editar</h2>
+          <div></div>
+        </div>
+        
+        <div className="bg-white rounded-lg shadow-lg">
+          <div className="p-4 border-b">
+            <h3 className="text-lg font-semibold">Todos los Estudiantes ({students.length})</h3>
+          </div>
+          
+          <div className="max-h-96 overflow-y-auto">
+            {students
+              .sort((a, b) => a.first_and_last_name.toLowerCase().localeCompare(b.first_and_last_name.toLowerCase()))
+              .map((student) => (
+                <button
+                  key={student.id}
+                  onClick={() => onStudentSelect(student)}
+                  className="w-full p-4 text-left hover:bg-gray-50 border-b border-gray-100 transition-colors"
+                >
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <div className="font-medium">{student.first_and_last_name}</div>
+                      <div className="text-sm text-gray-600">{student.class_name}</div>
+                    </div>
+                    <div className="text-blue-600 text-sm">Editar →</div>
+                  </div>
+                </button>
+              ))}
+          </div>
+          
+          {students.length === 0 && (
+            <div className="p-8 text-center text-gray-500">
+              No hay estudiantes registrados
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Teacher Edit Screen
+const TeacherEditScreen = ({ classes, onSaveTeacher, onBack }) => {
+  const [editingTeachers, setEditingTeachers] = useState({});
+  
+  const handleTeacherChange = (classId, newTeacherName) => {
+    setEditingTeachers(prev => ({
+      ...prev,
+      [classId]: newTeacherName
+    }));
+  };
+  
+  const handleSaveAll = () => {
+    Object.keys(editingTeachers).forEach(classId => {
+      const updatedClass = {
+        class_name: classes.find(c => c.id === classId).class_name,
+        teacher_name: editingTeachers[classId],
+        background_color: classes.find(c => c.id === classId).background_color
+      };
+      onSaveTeacher(classId, updatedClass);
+    });
+    onBack();
+  };
+  
+  return (
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-2xl mx-auto">
+        <div className="flex items-center justify-between mb-6">
+          <button
+            onClick={onBack}
+            className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
+          >
+            ← Volver
+          </button>
+          <h2 className="text-2xl font-bold text-gray-800">Editar Profesores</h2>
+          <div></div>
+        </div>
+        
+        <div className="bg-white rounded-lg shadow-lg">
+          <div className="p-4 border-b">
+            <h3 className="text-lg font-semibold">Nombres de Profesores</h3>
+          </div>
+          
+          <div className="p-6 space-y-4">
+            {classes.map((classItem) => (
+              <div key={classItem.id} className="flex items-center space-x-4">
+                <div 
+                  className="w-4 h-4 rounded-full" 
+                  style={{ backgroundColor: classItem.background_color }}
+                ></div>
+                <div className="flex-1">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    {classItem.class_name}
+                  </label>
+                  <input
+                    type="text"
+                    defaultValue={classItem.teacher_name}
+                    onChange={(e) => handleTeacherChange(classItem.id, e.target.value)}
+                    className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                    placeholder="Nombre del profesor/a"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="p-4 border-t flex gap-3">
+            <button
+              onClick={handleSaveAll}
+              className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Guardar Cambios
+            </button>
+            <button
+              onClick={onBack}
+              className="flex-1 bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors"
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Settings Screen
-const SettingsScreen = ({ onBack }) => {
+const SettingsScreen = ({ onBack, onAddStudent, onEditStudent, onAdvancedOptions }) => {
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-md mx-auto">
@@ -240,21 +559,21 @@ const SettingsScreen = ({ onBack }) => {
         
         <div className="space-y-4">
           <button
-            onClick={() => alert("Agregar estudiante - En desarrollo")}
+            onClick={onAddStudent}
             className="w-full bg-blue-600 text-white p-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
             AGREGAR ESTUDIANTE
           </button>
           
           <button
-            onClick={() => alert("Editar estudiante - En desarrollo")}
+            onClick={onEditStudent}
             className="w-full bg-blue-600 text-white p-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
             EDITAR ESTUDIANTE
           </button>
           
           <button
-            onClick={() => alert("Editar profesores - En desarrollo")}
+            onClick={onAdvancedOptions}
             className="w-full bg-blue-600 text-white p-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
             EDITAR PROFESORES
