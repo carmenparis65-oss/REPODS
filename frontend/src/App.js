@@ -381,6 +381,18 @@ function App() {
     );
   }
   
+  if (currentScreen === "studentsToCall") {
+    return (
+      <StudentsToCallScreen
+        selectedStudents={selectedStudents}
+        onBackToMenu={() => {
+          setCurrentScreen("main");
+          setSelectedStudents([]);
+        }}
+      />
+    );
+  }
+  
   return <div>Screen not found</div>;
 }
 
