@@ -188,6 +188,47 @@ const StudentListScreen = ({ className, students, onBack, teacherName, onStudent
   );
 };
 
+// Students to Call Screen
+const StudentsToCallScreen = ({ selectedStudents, onBackToMenu }) => {
+  return (
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-2xl mx-auto">
+        <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">ESTUDIANTES PARA LLAMAR</h2>
+        
+        <div className="bg-white rounded-lg shadow-lg">
+          <div className="p-4 border-b">
+            <h3 className="text-lg font-semibold">Lista de Estudiantes ({selectedStudents.length})</h3>
+          </div>
+          
+          <div className="max-h-96 overflow-y-auto">
+            {selectedStudents.map((student, index) => (
+              <div key={student.id} className="p-4 border-b border-gray-100">
+                <div className="font-medium">{student.first_and_last_name}</div>
+                <div className="text-sm text-gray-600">{student.class_name}</div>
+              </div>
+            ))}
+          </div>
+          
+          {selectedStudents.length === 0 && (
+            <div className="p-8 text-center text-gray-500">
+              No hay estudiantes seleccionados
+            </div>
+          )}
+        </div>
+        
+        <div className="mt-8 text-center">
+          <button
+            onClick={onBackToMenu}
+            className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+          >
+            IR AL MENÚ
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Settings Screen
 const SettingsScreen = ({ onBack }) => {
   return (
