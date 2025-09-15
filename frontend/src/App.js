@@ -32,7 +32,7 @@ const HomeScreen = ({ onContinue }) => {
 };
 
 // Main Screen - Menu with Classes
-const MainScreen = ({ classes }) => {
+const MainScreen = ({ classes, onClassSelect, onSettingsClick }) => {
   return (
     <div className="min-h-screen bg-white p-4">
       <div className="max-w-md mx-auto">
@@ -46,6 +46,7 @@ const MainScreen = ({ classes }) => {
           {classes.map((classItem, index) => (
             <button
               key={classItem.id}
+              onClick={() => onClassSelect(classItem.class_name)}
               className="w-full p-4 rounded-lg text-black font-bold text-lg hover:opacity-90 transition-opacity shadow-md text-left"
               style={{ backgroundColor: classItem.background_color }}
             >
@@ -55,7 +56,10 @@ const MainScreen = ({ classes }) => {
         </div>
         
         <div className="fixed bottom-6 right-6">
-          <button className="bg-gray-600 text-white p-3 rounded-full hover:bg-gray-700 transition-colors shadow-lg">
+          <button 
+            onClick={onSettingsClick}
+            className="bg-gray-600 text-white p-3 rounded-full hover:bg-gray-700 transition-colors shadow-lg"
+          >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -67,8 +71,118 @@ const MainScreen = ({ classes }) => {
   );
 };
 
+// Student List Screen
+const StudentListScreen = ({ className, students, onBack, teacherName }) => {
+  const isInfantil = className.includes("INFANTIL");
+  const isPrimaria123 = ["1º DE PRIMARIA", "2º DE PRIMARIA", "3º DE PRIMARIA"].includes(className);
+  const isPrimaria456 = ["4º DE PRIMARIA", "5º DE PRIMARIA", "6º DE PRIMARIA"].includes(className);
+  
+  let backgroundColor = "#F3F4F6";
+  if (isInfantil) {
+    backgroundColor = "#93C5FD";
+  } else if (isPrimaria123) {
+    backgroundColor = "#FB923C";
+  } else if (isPrimaria456) {
+    backgroundColor = "#A3E635";
+  }
+  
+  return (
+    <div className="min-h-screen p-6" style={{ backgroundColor }}>
+      <div className="max-w-2xl mx-auto">
+        <div className="flex items-center justify-between mb-6">
+          <button
+            onClick={onBack}
+            className="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
+          >
+            ← Volver
+          </button>
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-black">{className}</h2>
+            {teacherName && (
+              <p className="text-2xl font-bold text-black opacity-90 mt-1">{teacherName.toUpperCase()}</p>
+            )}
+          </div>
+          <div></div>
+        </div>
+        
+        <div className="bg-white rounded-lg shadow-lg">
+          <div className="p-4 border-b" style={{ backgroundColor: "#F97316" }}>
+            <h3 className="text-lg font-semibold text-black">SELECCIONAR ALUMNO/A ({students.length})</h3>
+          </div>
+          
+          <div className="h-4" style={{ backgroundColor }}></div>
+          
+          <div className="max-h-96 overflow-y-auto px-4">
+            {students
+              .sort((a, b) => a.first_and_last_name.toLowerCase().localeCompare(b.first_and_last_name.toLowerCase()))
+              .map((student) => (
+                <button
+                  key={student.id}
+                  className="w-full p-4 text-left hover:bg-gray-50 border-b border-gray-100 transition-colors"
+                >
+                  <span className="font-medium">{student.first_and_last_name}</span>
+                </button>
+              ))}
+          </div>
+          
+          {students.length === 0 && (
+            <div className="p-8 text-center text-gray-500">
+              No hay estudiantes en esta clase
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Settings Screen
+const SettingsScreen = ({ onBack }) => {
+  return (
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="max-w-md mx-auto">
+        <div className="flex items-center justify-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">OPCIONES AVANZADAS</h2>
+        </div>
+        
+        <div className="space-y-4">
+          <button
+            onClick={() => alert("Agregar estudiante - En desarrollo")}
+            className="w-full bg-blue-600 text-white p-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+          >
+            AGREGAR ESTUDIANTE
+          </button>
+          
+          <button
+            onClick={() => alert("Editar estudiante - En desarrollo")}
+            className="w-full bg-blue-600 text-white p-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+          >
+            EDITAR ESTUDIANTE
+          </button>
+          
+          <button
+            onClick={() => alert("Editar profesores - En desarrollo")}
+            className="w-full bg-blue-600 text-white p-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+          >
+            EDITAR PROFESORES
+          </button>
+          
+          <button
+            onClick={onBack}
+            className="w-full bg-blue-600 text-white p-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+          >
+            VOLVER AL MENÚ
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 function App() {
   const [currentScreen, setCurrentScreen] = useState("home");
+  const [selectedClass, setSelectedClass] = useState("");
+  const [students, setStudents] = useState([]);
   const [classes, setClasses] = useState([]);
   
   // Load classes when component mounts
@@ -85,12 +199,57 @@ function App() {
     }
   };
   
+  const loadStudentsByClass = async (className) => {
+    try {
+      const response = await axios.get(`${API}/students/class/${encodeURIComponent(className)}`);
+      setStudents(response.data);
+    } catch (error) {
+      console.error("Error loading students by class:", error);
+    }
+  };
+  
+  const handleClassSelect = (className) => {
+    setSelectedClass(className);
+    loadStudentsByClass(className);
+    setCurrentScreen("studentList");
+  };
+  
+  const getTeacherName = (className) => {
+    const classInfo = classes.find(c => c.class_name === className);
+    return classInfo ? classInfo.teacher_name : "";
+  };
+  
   if (currentScreen === "home") {
     return <HomeScreen onContinue={() => setCurrentScreen("main")} />;
   }
   
   if (currentScreen === "main") {
-    return <MainScreen classes={classes} />;
+    return (
+      <MainScreen 
+        classes={classes} 
+        onClassSelect={handleClassSelect}
+        onSettingsClick={() => setCurrentScreen("settings")}
+      />
+    );
+  }
+  
+  if (currentScreen === "studentList") {
+    return (
+      <StudentListScreen
+        className={selectedClass}
+        students={students}
+        onBack={() => setCurrentScreen("main")}
+        teacherName={getTeacherName(selectedClass)}
+      />
+    );
+  }
+  
+  if (currentScreen === "settings") {
+    return (
+      <SettingsScreen 
+        onBack={() => setCurrentScreen("main")}
+      />
+    );
   }
   
   return <div>Screen not found</div>;
