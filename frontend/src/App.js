@@ -598,10 +598,14 @@ function App() {
   const [selectedStudents, setSelectedStudents] = useState([]);
   const [students, setStudents] = useState([]);
   const [classes, setClasses] = useState([]);
+  const [showStudentForm, setShowStudentForm] = useState(false);
+  const [editingStudent, setEditingStudent] = useState(null);
+  const [allStudents, setAllStudents] = useState([]);
   
   // Load classes when component mounts
   useEffect(() => {
     loadClasses();
+    loadAllStudents();
   }, []);
   
   const loadClasses = async () => {
@@ -610,6 +614,15 @@ function App() {
       setClasses(response.data);
     } catch (error) {
       console.error("Error loading classes:", error);
+    }
+  };
+  
+  const loadAllStudents = async () => {
+    try {
+      const response = await axios.get(`${API}/students`);
+      setAllStudents(response.data);
+    } catch (error) {
+      console.error("Error loading students:", error);
     }
   };
   
@@ -648,6 +661,48 @@ function App() {
     }
     setSelectedStudent(null);
     setCurrentScreen("studentsToCall");
+  };
+  
+  const handleSaveStudent = async (studentData) => {
+    try {
+      if (editingStudent) {
+        await axios.put(`${API}/students/${editingStudent.id}`, studentData);
+      } else {
+        await axios.post(`${API}/students`, studentData);
+      }
+      
+      setShowStudentForm(false);
+      setEditingStudent(null);
+      loadAllStudents();
+      if (selectedClass) {
+        loadStudentsByClass(selectedClass);
+      }
+    } catch (error) {
+      console.error("Error saving student:", error);
+    }
+  };
+  
+  const handleDeleteStudent = async (studentId) => {
+    try {
+      await axios.delete(`${API}/students/${studentId}`);
+      setShowStudentForm(false);
+      setEditingStudent(null);
+      loadAllStudents();
+      if (selectedClass) {
+        loadStudentsByClass(selectedClass);
+      }
+    } catch (error) {
+      console.error("Error deleting student:", error);
+    }
+  };
+  
+  const handleSaveTeacher = async (classId, updatedClass) => {
+    try {
+      await axios.put(`${API}/classes/${classId}`, updatedClass);
+      loadClasses(); // Reload classes to see updated teacher names
+    } catch (error) {
+      console.error("Error updating teacher:", error);
+    }
   };
   
   const getTeacherName = (className) => {
