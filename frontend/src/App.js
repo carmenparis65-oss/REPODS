@@ -71,8 +71,54 @@ const MainScreen = ({ classes, onClassSelect, onSettingsClick }) => {
   );
 };
 
+// Student Details Modal
+const StudentDetailsModal = ({ student, onClose, onAddStudent, onAddAndFinish }) => {
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-lg max-w-md w-full max-h-96 overflow-y-auto">
+        <div className="p-6">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-xl font-bold">{student.first_and_last_name}</h3>
+            <button
+              onClick={onClose}
+              className="text-gray-500 hover:text-gray-700"
+            >
+              ✕
+            </button>
+          </div>
+          
+          <div className="space-y-3 text-sm">
+            <div><strong>Clase:</strong> {student.class_name}</div>
+            {student.mother_name && <div><strong>Nombre de la Madre:</strong> {student.mother_name}</div>}
+            {student.mother_phone && <div><strong>Teléfono de la Madre:</strong> {student.mother_phone}</div>}
+            {student.father_name && <div><strong>Nombre del Padre:</strong> {student.father_name}</div>}
+            {student.father_phone && <div><strong>Teléfono del Padre:</strong> {student.father_phone}</div>}
+            {student.allergies && <div><strong>Alergias:</strong> {student.allergies}</div>}
+            {student.comments && <div><strong>Comentarios:</strong> {student.comments}</div>}
+          </div>
+          
+          <div className="flex gap-3 mt-6">
+            <button
+              onClick={() => onAddStudent(student)}
+              className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              AÑADIR OTRO
+            </button>
+            <button
+              onClick={() => onAddAndFinish(student)}
+              className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              AGREGAR Y FINALIZAR
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Student List Screen
-const StudentListScreen = ({ className, students, onBack, teacherName }) => {
+const StudentListScreen = ({ className, students, onBack, teacherName, onStudentSelect, selectedStudents }) => {
   const isInfantil = className.includes("INFANTIL");
   const isPrimaria123 = ["1º DE PRIMARIA", "2º DE PRIMARIA", "3º DE PRIMARIA"].includes(className);
   const isPrimaria456 = ["4º DE PRIMARIA", "5º DE PRIMARIA", "6º DE PRIMARIA"].includes(className);
@@ -118,9 +164,15 @@ const StudentListScreen = ({ className, students, onBack, teacherName }) => {
               .map((student) => (
                 <button
                   key={student.id}
+                  onClick={() => onStudentSelect(student)}
                   className="w-full p-4 text-left hover:bg-gray-50 border-b border-gray-100 transition-colors"
                 >
-                  <span className="font-medium">{student.first_and_last_name}</span>
+                  <div className="flex justify-between items-center">
+                    <span className="font-medium">{student.first_and_last_name}</span>
+                    {selectedStudents.some(s => s.id === student.id) && (
+                      <span className="text-green-600 text-sm">✓ Seleccionado</span>
+                    )}
+                  </div>
                 </button>
               ))}
           </div>
