@@ -1,0 +1,13 @@
+{
+  "background_color": "#ffffff",
+  "description": "Uso privado",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Control_alumnos",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "Control Alumnos",
+  "start_url": "/",
+  "theme_color": "#000000",
+  "id": "Controlalumnos"
+}
